@@ -3,7 +3,8 @@
   name: BANDEAU - adresses - DRAL - format PDF	 	
 - link: https://web.enoria.app/tools/documentspdf/?p=902033&g=29621&titredoc=&doc=23056&orientation=portrait&preview=html&format=a4&options=nbjouravtdistri,nbjouravtdepos,choixtri&optionsValue=1,1,alphab%C3%A9tique%20Nom
   name: BANDEAU BULLETIN PAROISSIAL V Béta	 	
-- link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=22077&orientation=portrait&preview=html&format=a4&optionsName=ouinon&optionsValue=0	 	
+- link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=22077&orientation=portrait&preview=html&format=a4&optionsName=ouinon&optionsValue=0	 
+  name: BANDEAU BULLETIN PAROISSIAL V Béta xx
 - link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=2155&orientation=portrait&preview=html&format=a4
   name: Catéchisme - Fiche d'inscription préremplie	 	
 - link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=778&orientation=portrait&preview=html&format=a4
@@ -12,7 +13,7 @@
   name: Enveloppe Personne	 	
 - link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=23&orientation=portrait&preview=html&format=a4
   name: Fiche d'appel Jeunes	 	
-- link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=18&orientation=portrait&preview=html&format=a4"
+- link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=18&orientation=portrait&preview=html&format=a4
   name: Groupe ou éven. avec champs supp.	 	
 - link: https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=10544&orientation=portrait&preview=html&format=a4
   name: Groupes - Liste enfants avec coordonnées parents et champs supplémentaires v1.1	 	
