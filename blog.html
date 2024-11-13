@@ -10,7 +10,7 @@ title: Blog
   {% for post in site.posts %}
     <li>
       {{ post.url }}<br>
-      <h2><a href="https://awelvor.github.io/enoria{{ post.url| relative_url }}">{{ post.title }}</a></h2>
+      <h2><a href="https://awelvor.github.io/{{ post.url| relative_url }}">{{ post.title }}</a></h2>
       {{ post.excerpt }}
     </li>
   {% endfor %}
