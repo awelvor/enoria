@@ -16,7 +16,7 @@ Par exemple j'ai mis dans les bases personnelles d'Anne et Caroline la Fiche d'i
 | [BANDEAU BULLETIN PAROISSIAL V Béta avec personne morales](#) | |	responsables groupe COM |
 | [Caté collège PBN](#)	| |Responsables KT |
 | [Catéchisme - Fiche d'inscription préremplie](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=22077&orientation=portrait&preview=html&format=a4&optionsName=ouinon&optionsValue=0)	 | |	Responsables KT |
-| ][Enfants - Liste détaillée avec coord. Père-Mère - v1.0](#)	| |	Responsables KT |
+| [Enfants - Liste détaillée avec coord. Père-Mère - v1.0](#)	| |	Responsables KT |
 | [Enveloppe Personne](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=288&orientation=portrait&preview=html&format=a4)	| Tous |	 |
 | [Fiche d'appel Jeunes](#)	| |	Responsables KT |
 | [Groupe ou éven. avec champs supp.](#)	 |	|Administrateur |
