@@ -20,7 +20,7 @@ Par exemple j'ai mis dans les bases personnelles d'Anne et Caroline la Fiche d'i
 | [Enveloppe Personne](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=288&orientation=portrait&preview=html&format=a4)	| Tous |	 |
 | [Fiche d'appel Jeunes](#)	| |	Responsables KT |
 | [Groupe ou éven. avec champs supp.](#)	 |	|Administrateur |
-| [Groupes - Liste enfants avec coordonnées parents et champs supplémentaires v1.1](#)	| |	Responsables KT |
+| [Groupes - Liste enfants avec coordonnées parents](#)	| |	Responsables KT |
 | [Liste des utilisateurs avec leur compte](#)	| |	Administrateur |
 | [Liste personne avec numéros téléphones](https://web.enoria.app/tools/documentspdf/?p=901814&titredoc=&doc=10&orientation=portrait&preview=html&format=a4) | Tous |	 |
 | [ariages : Liste générale](#)	 | |	Assitante |
