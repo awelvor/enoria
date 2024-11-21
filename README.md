@@ -1,13 +1,5 @@
 # enoria
 
-Bonjour,
-
-La bibliothèque des documents disponibles dans Enoria s'est étoffée lors de notre découverte d'Enoria. Il va falloir qu'on la nettoie et que l'on mette en place des règles pour ajouter des documents afin que ça ne deviennent pas capharnaüm. 
-Dans un premier temps, j'ai réduit le nombre de personnes pouvant ajouter des documents à la base commune de la paroisse. Il faut garder à l'esprit que chacun peut ajouter des documents pour son utilisation personnelle mais qui n'apparaitra pas dans la base commune.
-
-D'après le tableau, ci-dessous, pour l'instant je ne garderais que 3 documents dans la base commune. Pour les autres il faudrait que les utilisateurs les chargent dans leur base personnel à partir de leur profil. 
-
-Par exemple j'ai mis dans les bases personnelles d'Anne et Caroline la Fiche d'inscription préremplie catéchisme. Il n'y a donc pas lieu qu'elle reste dans la base commune.
 
 | Nom du document | Base commune | Utilisation hors base commune |
 | ---------------  | ------------| ------------------------------|
