@@ -19,3 +19,9 @@
 | [Registre funérailles](#)	| |	Assitante + groupe funérailles |
 | [Trombinoscope](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=7&orientation=portrait&preview=html&format=a4)	| Tous | |
 | [edition organisation](#)	| |	Administrateur |
+
+Documents privés
+
+|      Nom                          |
+| --------------------------------- |
+|  [mes tables](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23161&orientation=portrait&preview=html&format=a4) |
