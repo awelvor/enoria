@@ -5,7 +5,7 @@
 | ---------------  | ------------| ------------------------------|
 | [Enoria - Mariage - Formulaire M1 - Dossier administratif](#)	 |	|Assistante |
 | [BANDEAU - adresses - DRAL - format PDF](https://web.enoria.app/tools/documentspdf/?p=882838,901523,865776,901535&g=29621&titredoc=&doc=23140&orientation=landscape&preview=pdf&format=a4) | | responsables groupe COM |
-| [Bandeau DRAL - Bac 1](https://web.enoria.app/tools/documentspdf/?p=882838,901523,865776,901535&g=29621&titredoc=&doc=23229&orientation=landscape&preview=pdf&format=a4) | | responsables groupe COM |
+| [Bandeau DRAL - Bac 1](https://web.enoria.app/tools/documentspdf/?p=882838&g=29621&titredoc=&doc=23229&orientation=portrait&preview=html&format=a4) | |
 | [BANDEAU BULLETIN PAROISSIAL V Béta avec personne morales](https://web.enoria.app/tools/documentspdf/p=882838,901523,865776,901535&g=29621&g=29621&titredoc=&doc=23056&orientation=portrait&preview=html&format=a4&optionsName=nbjouravtdistri,nbjouravtdepos,choixtri&optionsValue=1,1,alphab%C3%A9tique%20Nom) | | groupe COM |
 | [Caté collège PBN](#)	| |Responsables KT |
 | [Catéchisme - Fiche d'inscription préremplie](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=22077&orientation=portrait&preview=html&format=a4&optionsName=ouinon&optionsValue=0)	 | |	Responsables KT |
