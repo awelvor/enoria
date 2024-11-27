@@ -1,7 +1,7 @@
 # enoria
 
 
-| Nom du document | Base commune | Utilisation hors base commune |
+| Nom du document | Base commune |  |
 | ---------------  | ------------| ------------------------------|
 | [Enoria - Mariage - Formulaire M1 - Dossier administratif](#)	 |	|Assistante |
 | [BANDEAU - adresses - DRAL - format PDF](https://web.enoria.app/tools/documentspdf/?p=882838,901523,865776,901535&g=29621&titredoc=&doc=23140&orientation=landscape&preview=pdf&format=a4) | |  groupe COM |
@@ -20,6 +20,7 @@
 | [Registre funérailles](#)	| |	groupe funérailles |
 | [Trombinoscope](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=7&orientation=portrait&preview=html&format=a4)	| Tous | |
 | [edition organisation](#)	| |	Administrateur |
+|[Bandeau - DRAL - PM](https://web.enoria.app/tools/documentspdf/?p=882838&g=29621&titredoc=&doc=23249&orientation=portrait&preview=html&format=a4)||
 
 Documents privés
 
