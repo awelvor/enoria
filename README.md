@@ -27,7 +27,7 @@ Documents privés
 |      Nom                          |
 | --------------------------------- |
 |  [mes tables - TOUS](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23262&orientation=landscape&preview=pdf&format=a4) |
-|  [mes tables - ID particuliers](https://web.enoria.app/tools/documentspdf/?p=882838,901523,1040093&g=29621&titredoc=&doc=23262&orientation=landscape&preview=pdf&format=a4)|
+|  [mes tables - ID particuliers](https://web.enoria.app/tools/documentspdf/?p=882838,901523,1040093&g=29621&titredoc=&doc=23262&orientation=landscape&preview=pdf&format=a4&optionsName=mybac&optionsValue=7)|
 |[sort_tst](https://web.enoria.app/tools/documentspdf/?p=1040148&g=29621&titredoc=&doc=23239&orientation=portrait&preview=html&format=a4)|
 
 
