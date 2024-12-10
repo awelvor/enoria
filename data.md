@@ -7,3 +7,4 @@
 |   | Pierre Yvon | NICOL |
 |  | Solange | COZ |
 |  | Anne | RIOU |
+| | François | FAUCHEUR |
