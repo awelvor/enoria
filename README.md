@@ -1,51 +1,21 @@
-# enoria
+# ENORIA Personnes
+
+| ID | Prenom | Nom | URL |
+| -- | ------ | --- | --- |
+| 882838 | Louis | DOSCH |[dral](https://web.enoria.app/tools/documentspdf/?p=882838&g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero)|
+| 902626 | Philippe | REGENT |[enveloppe](https://web.enoria.app/tools/documentspdf/?p=902616&titredoc=&doc=288&orientation=portrait&preview=html&format=a4)|
+| 902398   | Pierre Yvon | NICOL |[dral](https://web.enoria.app/tools/documentspdf/?p=902314&g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero)|
+| 902056| Solange | COZ |[dral](https://web.enoria.app/tools/documentspdf/?p=902056&g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero)|
+| 902195 | Anne | RIOU |[dral](https://web.enoria.app/tools/documentspdf/?p=902195&g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero)|
+| 901098| François | FAUCHEUR |[dral](https://web.enoria.app/tools/documentspdf/?p=901098&g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero) |
+| | * | * |[funérailles](https://web.enoria.app/tools/documentspdf/?p=1042904,1032503,1060976,1054182,1032576,1040757,1045837,1054203,902273,1040748,902590,1040786,1054219,1054241,1060995,1061635,901398,1040769,1051692,1055913,1039011,901407,902109,1033084,1033972,1045830,1058278,1045857,1045849,1040811,902129,1033342,901524,1038993,1053367,1045876,901443,901531,1053384,1045864,1058248,1040815,901449,1033994,901457,1045814,901744,1047955,890300,1045817&titredoc=&doc=23168&orientation=portrait&preview=html&format=a4)|
+|  |  | bac1 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Un,Zero,Zero)|
+|  |  | bac2 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Deux,Zero,Zero)|
+|  |  | bac3 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero)|
+|  |  | bac4 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Quatre,Zero,Zero)|
+|  |  | bac5 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Cinq,Zero,Zero)|
+|  |  | bac6 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Six,Zero,Zero)|
+|  |  | bac7 |[dral](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Sept,Zero,Zero)|
+|  | 4 | abonnes |[dral](https://web.enoria.app/tools/documentspdf/?p=882838,901126,901098,902315&g=29621&titredoc=&doc=23355&orientation=landscape&preview=pdf&format=a4&optionsName=mybac,mydepot,mydist&optionsValue=Trois,Zero,Zero)|
 
 
-| Nom du document | Base commune |  |
-| ---------------  | ------------| ------------------------------|
-| [Enoria - Mariage - Formulaire M1 - Dossier administratif](#)	 |	|Assistante |
-| [BANDEAU - adresses - DRAL - format PDF](https://web.enoria.app/tools/documentspdf/?p=882838,901523,865776,901535&g=29621&titredoc=&doc=23140&orientation=landscape&preview=pdf&format=a4) | |  groupe COM |
-| [Bandeau DRAL - Bac 1](https://web.enoria.app/tools/documentspdf/?p=882838,901523&g=29621&titredoc=&doc=23231&orientation=landscape&preview=pdf&format=a4) | |
-| [BANDEAU BULLETIN PAROISSIAL V Béta avec personne morales](https://web.enoria.app/tools/documentspdf/?p=882838,901523,865776,901535&g=29621&titredoc=&doc=23056&orientation=portrait&preview=html&format=a4&optionsName=nbjouravtdistri,nbjouravtdepos,choixtri&optionsValue=1,1,alphab%C3%A9tique%20Nom) | | groupe COM |
-| [Caté collège PBN](#)	| |Responsables KT |
-| [Catéchisme - Fiche d'inscription préremplie](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=22077&orientation=portrait&preview=html&format=a4&optionsName=ouinon&optionsValue=0)	 | |	Responsables KT |
-| [Enfants - Liste détaillée avec coord. Père-Mère - v1.0](#)	| |	Responsables KT |
-| [Enveloppe Personne](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=288&orientation=portrait&preview=html&format=a4)	| Tous |	 |
-| [Fiche d'appel Jeunes](#)	| |	Responsables KT |
-| [Groupe ou éven. avec champs supp.](#)	 |	|Administrateur |
-| [Groupes - Liste enfants avec coordonnées parents](#)	| |	Responsables KT |
-| [Liste des utilisateurs avec leur compte](#)	| |	Administrateur |
-| [Liste personne avec numéros téléphones](https://web.enoria.app/tools/documentspdf/?p=901814&titredoc=&doc=10&orientation=portrait&preview=html&format=a4) | Tous |	 |
-| [Mariages : Liste générale](#)	 | |	Assitante |
-| [Registre funérailles](#)	| |	groupe funérailles |
-| [Trombinoscope](https://web.enoria.app/tools/documentspdf/?p=901858&titredoc=&doc=7&orientation=portrait&preview=html&format=a4)	| Tous | |
-| [edition organisation](#)	| |	Administrateur |
-|[Bandeau - DRAL - PM](https://web.enoria.app/tools/documentspdf/?p=882838&g=29621&titredoc=&doc=23249&orientation=portrait&preview=html&format=a4)||
-
-Documents privés
-
-|      Nom                          |
-| --------------------------------- |
-|  [mes tables - TOUS](https://web.enoria.app/tools/documentspdf/?g=29621&titredoc=&doc=23262&orientation=landscape&preview=pdf&format=a4) |
-|  [mes tables - ID particuliers](https://web.enoria.app/tools/documentspdf/?p=882838,901523,1040093&g=29621&titredoc=&doc=23281&orientation=landscape&preview=pdf&format=a4&optionsName=mybac&optionsValue=3)|
-|[les dates](https://web.enoria.app/tools/documentspdf/?p=902351&titredoc=&doc=23316&orientation=portrait&preview=html&format=a4)|
-
-
-
->[!NOTE]
->Useful information that users should know, even when skimming content.
-
-> [!TIP]
-> Helpful advice for doing things better or more easily.
-
-> [!IMPORTANT]
-> Key information users need to know to achieve their goal.
-
-> [!WARNING]
-> Urgent info that needs immediate user attention to avoid problems.
-
-> [!CAUTION]
-> Advises about risks or negative outcomes of certain actions.
-
-
-****************************************************************************************************************
