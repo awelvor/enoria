@@ -7,7 +7,6 @@ function test() {
 }
 ```
 <html>
-
 <body>
 <main style="font-family: sans-serif; font-size:15px;">
 <h2 style="text-align: center;">Défunts</h2>
@@ -69,7 +68,6 @@ function test() {
 		{% endfor %}
 		</tbody>
 	</table>
-	
 </main>	
 </body>
 </html>
