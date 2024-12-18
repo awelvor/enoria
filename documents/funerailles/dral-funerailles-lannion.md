@@ -1,3 +1,11 @@
+> [!note]
+> dral-funeraille-lannion
+
+```
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
 <html>
 
 <body>
@@ -10,7 +18,9 @@
     <p style="margin:100px 0 0 0;">Ce document effectue un relevé des obsèques célébrées dans un intervalle de temps,
         défini, autour de ce jour, par les options: debut et fin.</p>
 
-    <p style="page-break-before: always; margin: 0 0 0 0;"></p>
+   
+```
+ <p style="page-break-before: always; margin: 0 0 0 0;"></p>
 {% set listeFunerailles = [] %}
 {% set AnneeEnCours = [] %}
 {% for personne in personnes %}
@@ -21,6 +31,7 @@
 {% endif %}
 {% endfor %}
 {% endfor %}
+```
 	
     
     
