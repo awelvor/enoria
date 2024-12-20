@@ -2,10 +2,6 @@
 > dral-funeraille-lannion
 
 ```
-function test() {
-  console.log("notice the blank line before this function?");
-}
-```
 <html>
 <body>
 <main style="font-family: sans-serif; font-size:15px;">
@@ -71,3 +67,4 @@ function test() {
 </main>	
 </body>
 </html>
+```
