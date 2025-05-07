@@ -1,0 +1,49 @@
+ <html><body>
+     <h3>Calendrier Liturgique</h3>
+
+
+     <table>
+         <tr>
+             <th>id</th>
+    <th>Date et Heure</th>
+    <th>Lieu</th>
+    <th>Célébrant</th>
+    <th>Acteurs</th>
+    <th>Type</th>
+             <th>Information</th>
+         </tr>
+{% for messe in messes %}   
+
+<tr>
+    <td>{{messe.id}}</td>
+    <td>{{messe.dateheure|format_datetime('full','none',locale='fr')}} <br>{{messe.dateheure|date('H:i')}}</td>
+    <td>{{messe.reservationEglise.salle}}</td>
+    <td>
+    {% for Celebrant in messe.celebrants %}
+      {{ Celebrant.personne.titre}}   {{ Celebrant.personne.prenom}}  {{ Celebrant.personne.particuleNom }}  {{ Celebrant.personne.nom}}<br>
+     {% endfor %} 
+    </td>
+    <td>
+        {% for Actor in  messe.acteurs %}{{ Actor.personne }}<br>{% endfor %}  
+    </td>
+    <td>{{ messe.type }}</td>
+    <td>{{ messe.informations }}</td>
+ </tr>
+
+{% endfor %}
+</table>
+     
+     {% for celebrant in celebrants %}
+     {{ celebrant.id }}<br>
+     
+     {{ celebrant.personne.prenom }}<br>
+     {{ celebrant.personne.nom }}<br>
+     
+     {{ celebrant.personne.mailPerso }}<br>
+     {{ celebrant.personne.parente1|length }}<br>
+     
+     {% endfor %}
+     
+
+</body>
+</html>
