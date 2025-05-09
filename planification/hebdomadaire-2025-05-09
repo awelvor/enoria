@@ -18,6 +18,7 @@
     <td>{{messe.dateheure|format_datetime('full','none',locale='fr')}} <br>{{messe.dateheure|date('Y-m-d')}}</td>
     <td>{{messe.reservationEglise.salle}}</td>
     <td>
+    
     {% for Celebrant in messe.celebrants %}
       {{ Celebrant.personne.titre}}   {{ Celebrant.personne.prenom}}  {{ Celebrant.personne.particuleNom }}  {{ Celebrant.personne.nom}}<br>
      {% endfor %} 
@@ -44,33 +45,50 @@
      
      <h4>classement par lieu</h4> 
      {% set lieux= ["Lannion Saint-Jean du Baly à Lannion","Brélévenez Sainte Trinité","Servel Saint-Pierre à Servel"] %}
+     {% set debut="2025-05-11" %}
+     
+     {% set les_dates=[
+     debut|date_modify("+0 day"),
+     debut|date_modify("+1 day"),
+     debut|date_modify("+2 day"),
+     debut|date_modify("+3 day"),
+     debut|date_modify("+4 day"),
+     debut|date_modify("+5 day"),
+     debut|date_modify("+6 day")
+  ] %}
+     
      
 <table>
 <tr>
 <th>Paroisse Bonne-Nouvelle</th>
-<th>lundi</th>
-<th>mardi</th>
-<th>mercredi</th>
-<th>jeudi</th>
-<th>vendredi</th>
-<th>samedi</th>
-<th>dimanche</th>
+    {% for la_date in les_dates %}<th>{{la_date|date('Y-m-d')}} </th>{% endfor %}
+    
 </tr>
 
    
-    {% for lieu in lieux %}
-
-    
+{% for lieu in lieux %}
+<tr>
+<td>{{lieu}}</td>
+    {% for la_date in les_dates %}
     
     {% for messe in messes %} 
-    <tr>
-    {% if messe.reservationEglise.salle == lieu %}
-    <td>{{lieu}}</td>
-    <td>{% for Celebrant in messe.celebrants %}{{ Celebrant.personne.prenom}}    {{ Celebrant.personne.nom}}<br>{% else %} *{% endfor %} </td>
-    {% endif %}
-    </tr>
-    {% endfor %}
-    {% endfor %}
+            {% if messe.reservationEglise.salle == lieu %}
+                 <td>
+                    {% if  messe.dateheure|date('Y-m-d')==la_date|date('Y-m-d') %}
+                        {{messe.dateheure|date('H-i')}}<br>
+                        {% for Celebrant in messe.celebrants %}{{ Celebrant.personne.prenom}} <br>{% else %} *{% endfor %} 
+                    {% else %}
+                        * 
+                     {% endif %}
+                </td>
+            {% endif %}
+        {% endfor %} {# endfor messes #}
+        
+    {% endfor %}{# endfor les_dates #}
+    <td>eol</td>
+
+  </tr>
+{% endfor %} {# endfor lieux #}
 
 
 
