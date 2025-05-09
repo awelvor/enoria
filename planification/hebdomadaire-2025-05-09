@@ -1,0 +1,82 @@
+ <html><body>
+     <h3>Calendrier Liturgique</h3>
+
+     <h4>Toutes les célébrations</h4>
+     <table>
+         <tr>
+             <th>id</th>
+    <th>Date et Heure</th>
+    <th>Lieu</th>
+    <th>Célébrant</th>
+    <th>Acteurs</th>
+    <th>Type</th>
+             <th>Information</th>
+         </tr>
+{% for messe in messes %}   
+<tr>
+    <td>{{messe.id}}</td>
+    <td>{{messe.dateheure|format_datetime('full','none',locale='fr')}} <br>{{messe.dateheure|date('Y-m-d')}}</td>
+    <td>{{messe.reservationEglise.salle}}</td>
+    <td>
+    {% for Celebrant in messe.celebrants %}
+      {{ Celebrant.personne.titre}}   {{ Celebrant.personne.prenom}}  {{ Celebrant.personne.particuleNom }}  {{ Celebrant.personne.nom}}<br>
+     {% endfor %} 
+    </td>
+    <td>
+        {% for Actor in  messe.acteurs %}{{ Actor.personne }}<br>{% endfor %}  
+    </td>
+    <td>{{ messe.type }}</td>
+    <td>{{ messe.informations }}</td>
+ </tr>
+{% endfor %}
+</table>
+     <h4>Les célébrants</h4>
+     {% for celebrant in celebrants %}
+     {{ celebrant.id }}<br>
+     
+     {{ celebrant.personne.prenom }}<br>
+     {{ celebrant.personne.nom }}<br>
+     
+     {{ celebrant.personne.mailPerso }}<br>
+     {{ celebrant.personne.parente1|length }}<br>
+     
+     {% endfor %}
+     
+     <h4>classement par lieu</h4> 
+     {% set lieux= ["Lannion Saint-Jean du Baly à Lannion","Brélévenez Sainte Trinité","Servel Saint-Pierre à Servel"] %}
+     
+<table>
+<tr>
+<th>Paroisse Bonne-Nouvelle</th>
+<th>lundi</th>
+<th>mardi</th>
+<th>mercredi</th>
+<th>jeudi</th>
+<th>vendredi</th>
+<th>samedi</th>
+<th>dimanche</th>
+</tr>
+
+   
+    {% for lieu in lieux %}
+
+    
+    
+    {% for messe in messes %} 
+    <tr>
+    {% if messe.reservationEglise.salle == lieu %}
+    <td>{{lieu}}</td>
+    <td>{% for Celebrant in messe.celebrants %}{{ Celebrant.personne.prenom}}    {{ Celebrant.personne.nom}}<br>{% else %} *{% endfor %} </td>
+    {% endif %}
+    </tr>
+    {% endfor %}
+    {% endfor %}
+
+
+
+</table>
+     
+     
+
+</body>
+</html>
