@@ -1,0 +1,136 @@
+ <html>  
+<body>
+
+
+{% set la_date="" %}
+    <div class="row">
+    <div class="column">                 
+<table>
+{% for messe in messes %}
+{% if messe.dateheure|date('m')== '06'  and messe.dateheure|date('d')< '08' %}
+    {% if messe.dateheure|format_datetime('full','none',locale='fr') != la_date %} 
+        <tr >
+            <td colspan="2" >{{ messe.dateheure|format_datetime('full','none',locale='fr') }}</td>
+        </tr>
+        {% set la_date = messe.dateheure|format_datetime('full','none',locale='fr') %}
+    {% endif %}
+    {% if messe.intentions|length>0 %}
+    <tr style="background-color: #ddd;">
+        <td style="width: 40%; border: 0;">
+            {{ messe.dateheure|date('H:i')}} <br>
+            {{messe.reservationEglise.salle}}<br>
+           
+         </td>
+        <td style="width: 60%;">
+            <ul>
+                {% for intention in messe.intentions|sort %}
+                    <li>{{ intention.intention }}</li>
+               {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endif %} {# messe.intentions|length>0 #}
+   {% endif %} {# messe.dateheure|date('m')== '06'  and messe.dateheure|date('d')< '15' #}
+  {% endfor %} {# messe in messes #}
+</table>
+</div>
+    <div class="column"> 
+     
+   <table >
+{% for messe in messes %}
+{% if messe.dateheure|date('m')== '06'  and messe.dateheure|date('d')> '07' and messe.dateheure|date('d')< '15'%}
+    {% if messe.dateheure|format_datetime('full','none',locale='fr') != la_date %} 
+        <tr style="background-color: #bbb;">
+            <td colspan="2" >{{ messe.dateheure|format_datetime('full','none',locale='fr') }}</td>
+        </tr>
+        {% set la_date = messe.dateheure|format_datetime('full','none',locale='fr') %}
+    {% endif %}
+    {% if messe.intentions|length>0 %}
+    <tr style="background-color: #ddd;">
+        <td style="width: 40%; border: 0;">
+            {{ messe.dateheure|date('H:i')}} <br>
+            {{messe.reservationEglise.salle}}<br>
+           
+         </td>
+        <td style="width: 60%;">
+            <ul>
+                {% for intention in messe.intentions|sort %}
+                    <li>{{ intention.intention }}</li>
+               {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endif %}
+   {% endif %}
+  {% endfor %}
+</table>
+</div>
+ </div>
+   <div style="page-break-before: always; margin: 0 0 0 0;"></div>
+ 
+ <div class="row">
+    <div class="column">                 
+<table>
+{% for messe in messes %}
+{% if messe.dateheure|date('m')== '06'  and messe.dateheure|date('d')>'14'  and messe.dateheure|date('d')<'22' %}
+    {% if messe.dateheure|format_datetime('full','none',locale='fr') != la_date %} 
+        <tr >
+            <td colspan="2" >{{ messe.dateheure|format_datetime('full','none',locale='fr') }}</td>
+        </tr>
+        {% set la_date = messe.dateheure|format_datetime('full','none',locale='fr') %}
+    {% endif %}
+    {% if messe.intentions|length>0 %}
+    <tr style="background-color: #ddd;">
+        <td style="width: 40%; border: 0;">
+            {{ messe.dateheure|date('H:i')}} <br>
+            {{messe.reservationEglise.salle}}<br>
+           
+         </td>
+        <td style="width: 60%;">
+            <ul>
+                {% for intention in messe.intentions|sort %}
+                    <li>{{ intention.intention }}</li>
+               {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endif %} {# messe.intentions|length>0 #}
+   {% endif %} {# messe.dateheure|date('m')== '06'  and messe.dateheure|date('d')>21 '15' #}
+  {% endfor %} {# messe in messes #}
+</table>
+</div>
+    <div class="column"> 
+     
+   <table >
+{% for messe in messes %}
+{% if messe.dateheure|date('m')== '06'  and messe.dateheure|date('d')> '21' %}
+    {% if messe.dateheure|format_datetime('full','none',locale='fr') != la_date %} 
+        <tr style="background-color: #bbb;">
+            <td colspan="2" >{{ messe.dateheure|format_datetime('full','none',locale='fr') }}</td>
+        </tr>
+        {% set la_date = messe.dateheure|format_datetime('full','none',locale='fr') %}
+    {% endif %}
+    {% if messe.intentions|length>0 %}
+    <tr style="background-color: #ddd;">
+        <td style="width: 40%; border: 0;">
+            {{ messe.dateheure|date('H:i')}} <br>
+            {{messe.reservationEglise.salle}}<br>
+           
+         </td>
+        <td style="width: 60%;">
+            
+                {% for intention in messe.intentions|sort %}
+                    {{ intention.intention }}<br>
+               {% endfor %}
+            
+        </td>
+    </tr>
+    {% endif %}
+   {% endif %}
+  {% endfor %}
+</table>
+</div>
+ </div>
+
+</body>
+</html>
