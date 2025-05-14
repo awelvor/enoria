@@ -1,0 +1,27 @@
+<style> 
+* { font-family: DejaVu Sans, 'Helvetica Neue', Helvetica, sans-serif; }
+
+div.positiona {
+position: fixed;
+top: 10px;
+left: 306px;
+border-style:none;
+background-color: #fff;
+width: 395px;
+height: 395px;
+font-size: 13px;
+font-family: sans-serif;
+}
+
+div.positionb {
+position: fixed;
+top: 400px;
+left: 306px;
+border-style:none;
+background-color: #fff;
+width: 395px;
+height: 395px;
+font-size: 13px;
+font-family: sans-serif;
+}
+</style>
