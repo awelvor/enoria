@@ -1,0 +1,58 @@
+<html><body>
+    <h2>Planification Baptemes</h2>
+    
+    {% set lieux =[]  %}
+ {% set lieu="" %}
+ {% for sacrement in sacrements %} 
+{% if sacrement.lieuReservation.salle.lieu not in lieux %} {% set lieux=lieux|merge([sacrement.lieuReservation.salle.lieu]) %} {% endif %}
+{% endfor %}
+     
+    
+    
+    
+	
+		
+    
+    
+    
+    
+        {% set debut="2025-05-25" %}
+     
+     {% set les_dates=[
+     debut|date_modify("+0 day"),
+     debut|date_modify("+1 day"),
+     debut|date_modify("+2 day"),
+     debut|date_modify("+3 day"),
+     debut|date_modify("+4 day"),
+     debut|date_modify("+5 day"),
+     debut|date_modify("+6 day"),
+     
+  ] %}
+     
+<table>
+<tr>
+<th>Paroisse Bonne-Nouvelle</th>
+{% for la_date in les_dates %}<th style="width: 10%;">{{la_date|format_datetime('full', 'none', locale: 'fr')|slice(0,-5)}} </th>{% endfor %}
+</tr>
+{% for lieu in lieux %}
+<tr>
+<td>{{lieu}}</td>
+    {% for la_date in les_dates %}
+    <td>
+        {% for sacrement in sacrements %} 
+        {% if sacrement.lieuReservation.salle.lieu==lieu and sacrement.dateprevue|date('Y-m-d')==la_date|date('Y-m-d') %}
+                 {{sacrement.dateprevue|date('H-i')}}<br>
+                 {{ sacrement.celebrant.prenom }}
+            {% endif %}
+        {% endfor %} {# endfor messes #}
+    {% endfor %}{# endfor les_dates #}
+    </td>
+</tr>
+{% endfor %} {# endfor lieux #}
+</table>
+</body>
+</html>
+	
+		
+	
+	</body></html>
