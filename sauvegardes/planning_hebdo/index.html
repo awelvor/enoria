@@ -1,0 +1,96 @@
+<html>
+     <body>
+     {# Affichage du logo et des coordonnées de la paroisse #}
+   
+         
+         
+        {# Affichage du titre demandé par l'utilisateur ou "célébrations " & date d édition de cette liste #}
+		{%set  titrechoisi=''%}
+		
+        {% if  titre!='Fiche de messe' %}
+			{%set  titrechoisi=titre %}
+        {% else %}
+			{%set  titrechoisi='' %}
+                
+                {% for messe in messes %}
+                    {% if loop.first %} {%set  titrechoisi='  du  ' ~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM') %}{% endif %}
+                    {% if loop.last %} {%set  titrechoisi=titrechoisi~' '~'au  '~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM')%}{% endif %}
+                {% endfor %}
+                
+            {%set titrechoisi='Célébrations ' ~ titrechoisi %}
+               
+	            
+        {% endif %}
+		
+		
+		<h2>
+			{{titrechoisi}}
+		</h2>
+     
+     
+     {% set lieux =[]  %}
+	 {% set DatesMesses =[]  %}
+     {% set lieu="" %}
+     {% set VarDate ="" %}
+      
+    {#création  du tableau des lieux pour les messes sélectionnées#}
+    {% for messe in messes %} 
+        {% if messe.reservationEglise.salle not in lieux %} {% set lieux=lieux|merge([messe.reservationEglise.salle]) %} {% endif %}
+    {% endfor %}
+
+	{#création des du tableau des dates pour les messes sélectionnées#}
+	{% for messe1 in messes %}
+         {% set VarDate=messe1.dateheure|format_datetime('none','none',pattern='EEEE')|capitalize|upper ~' '~ messe1.dateheure|format_datetime('none','none',pattern='dd MMMM')|capitalize|upper %}
+		{%if VarDate not in DatesMesses %} {% set DatesMesses=DatesMesses|merge([VarDate]) %}{% endif %}
+	{% endfor %}
+    
+      
+																																											
+    <table>
+		<thead>
+			<tr>
+				<th style="width: 12%;">PBN</th>
+               {% for la_date in DatesMesses %} 
+					<th style="width: 12%;"> <span style="font-size:10px"> {{la_date }}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+        
+            {% for lieu in lieux %}
+                <tr>
+                <td style="background-color:#eee">
+                 {% if     lieu matches '/Baly/'   %}Saint-Jean du Baly
+                 {% elseif lieu matches '/Servel/' %}Servel
+                 {% elseif lieu matches '/Ploubezre/' %}Ploubezre
+                 {% elseif lieu matches '/Kergomar/' %}EHPAD Kergomar
+                 {% elseif lieu matches '/Fontaines/' %}Chapelle N.D. des Fontaines
+                 {% elseif lieu matches '/Saint-Yves/' %}Saint-Yves
+                 {% elseif lieu matches '/Lanmérin/' %}Lanmérin
+                 {% else %} {{lieu}}
+                 {% endif %}
+                    </td>
+                    {% for la_date in DatesMesses %}
+                    <td>
+                        {% for messe in messes %} 
+                            {% if messe.reservationEglise.salle==lieu and messe.dateheure|format_datetime('none','none',pattern='EEEE')|capitalize|upper ~' '~ messe.dateheure|format_datetime('none','none',pattern='dd MMMM')|capitalize|upper==la_date %}
+                           
+                                 <span style="font-size:11px;">{{messe.dateheure|date('H')}}h{{messe.dateheure|date('i')}}</span><br>
+                               
+                        {% for cel in messe.celebrants %}<strong>{{cel.personne.prenom}}</strong>{% endfor %}
+								
+                                
+                                  <br>{{messe.informations}} 
+                                    
+                               
+                            {% endif %}
+                         
+                        
+                       
+                    {% endfor %}{# endfor DatesMesses #}
+            {% endfor %} {# endfor messes #}
+                    </td>
+                    
+        </tr>
+            {% endfor %} {# endfor lieux #}
+    </table>
+    </body>
