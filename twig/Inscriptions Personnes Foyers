@@ -1,0 +1,35 @@
+<body>
+{% set abonne = 0 %}
+{% set bac = 0 %}
+{% set fin_abonnement = "" %}
+{% set pm = false %}
+{% set centreDist = "" %}
+{% set tourneeFacteur = 0 %}
+{% set dist = "" %}
+{% set personneMorale = "" %}
+{% set bac = 0      %}
+{% set ville="paris"  %}
+{% set cp = "22300" %}
+<table>
+{% for inscription  in inscriptions %}
+    {% for value in inscription.valuesExtras %}
+    {%     if value.champExtra.id==47010 %}{% set fin_abonnement = value.value %}
+    {% elseif value.champExtra.id==47013 %}{% set abonne         = value.value %}
+    {% elseif value.champExtra.id==47426 %}{% set bac            = value.value %}
+    {% elseif value.champExtra.id==47077 %}{% set dist           = value.value %}
+    {% elseif value.champExtra.id==47078 %}{% set centreDist     = value.value %}
+    {% elseif value.champExtra.id==47087 %}{% set tourneeFacteur = value.value %}
+    {% elseif value.champExtra.id==57457 %}{% set personneMorale = value.value %}
+    {% endif %}
+    {% endfor %}
+    {% for foyer in inscription.personne.membrefoyer %}
+    {% set ville=foyer.adressePostale.ville  %}
+    {% set cp = foyer.adressePostale.cp %}
+    {% endfor %}
+    
+    <tr>
+    <td>{{inscription.personne.prenom}}</td><td> {{inscription.personne.nom}}</td><td>{{cp}}</td><td>{{ville}}</td><td>bac: {{bac}}</td><td>{{tourneeFacteur}}</td>
+    </tr> 
+{% endfor %}
+</table>
+</body>
