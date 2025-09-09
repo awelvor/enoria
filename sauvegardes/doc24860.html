@@ -1,3 +1,49 @@
+<style>
+
+html {
+    font-family: Helvetica, Verdana, Georgia, Arial, serif;
+}
+
+img {
+    float: left;
+    margin-right: 10px;
+    width: 75px;
+    height: 75px;
+}
+
+table {
+    font-family: Helvetica, Verdana, Georgia, Arial, serif;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-collapse: collapse;
+    page-break-after: auto ;
+}
+tr,th,td 
+{
+    font-size:11px;
+    padding: 1px;
+    border: 1px solid black;
+    border-collapse: collapse;
+   
+    text-align: center; 
+    vertical-align : middle;
+   
+}
+
+th 
+{
+    background-color: rgb(211,211,211);
+    line-height: 1.0em;
+
+}
+</style>
+
+
+
+
+
+
 <!doctype html>
 <html>
     <head>
@@ -116,8 +162,7 @@
      {% if messe.reservationEglise.salle not in leslieux %} {% set leslieux=leslieux|merge([messe.reservationEglise.salle]) %} {% endif %}
      {% if messe.dateheure|date('Y/m/d') not in lesdates %} {% set lesdates=lesdates|merge([messe.dateheure|date('Y/m/d')]) %} {% endif %}
     {% endfor %}
-         
-    xx    
+           
  <table>
          <tr>
              <td>PBN</td>
@@ -133,7 +178,7 @@
            {% for ladate in lesdates %}
        
          {% for messe in messes %} 
-        {% if chapelle.id==messe.reservationEglise.salle and ladate==messe.dateheure|date('Y/m/d') %}{% set nmesse= nmesse +1 %} {{ nmesse }}{% endif %}
+        {% if chapelle.id==messe.reservationEglise.salle and ladate==messe.dateheure|date('Y/m/d') %}{% set nmesse= nmesse +1 %}{% endif %}
          {% endfor %}
               
          {% endfor %}
@@ -146,12 +191,9 @@
          {% for messe in messes %} 
         {% if chapelle.id==messe.reservationEglise.salle and ladate==messe.dateheure|date('Y/m/d') %}
              {{messe.dateheure|date('H:i')}}<br>
-            {# 1: {{ messe.type }}<br> #}
+            
             {{ messe.informations }}<br>
-            {#3: {{ messe.annoncesPubliques }}<br>#}
-            {#4: {{ messe.informationsLiturgiques.couleur }}<br> #}
-            {#5: {{ messe.informationsLiturgiques.ligne1 }}<br>#}
-            {#6: {{ messe.informationsLiturgiques.ligne2 }}<br>#}
+            
             {% for cel in messe.celebrants %}<b>{{cel.personne.prenom}}</b>{% endfor %}
          {% endif %}
          {% endfor %}
@@ -162,7 +204,7 @@
             
          {% endfor %}
          </table>
-         yy
+         
     </body>
 </html>
 
