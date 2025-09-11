@@ -38,12 +38,6 @@ th
 
 }
 </style>
-
-
-
-
-
-
 <!doctype html>
 <html>
     <head>
@@ -69,15 +63,13 @@ th
                     {% if loop.last %} {%set  titrechoisi=titrechoisi~' '~'au  '~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM')%}{% endif %}
                 {% endfor %}
                 
-            {%set titrechoisi='Célébrations ' ~ titrechoisi %}
+            {%set titrechoisi='Planning hebdomadaire des célébrations ' ~ titrechoisi %}
                
 	            
         {% endif %}
 		
 		
-		<h2>
-		 {{titrechoisi}}
-		</h2>
+		<h3>{{titrechoisi}}</h3>
          
          {% set leslieux=[] %}
          {% set lesdates=[] %}
@@ -165,7 +157,7 @@ th
            
  <table>
          <tr>
-             <td>PBN</td>
+             <td  style="background-color:#f90;">PBN</td>
              {% for ladate in lesdates %}
              <td style="background-color:#f90;">{{ (ladate~' 00:00:00')|format_datetime(locale='fr', pattern='EEEE') }}<br>{{ (ladate~' 00:00:00')|date('d/m')}}</td>
              {% endfor %}
@@ -185,9 +177,9 @@ th
            
          {% if nmesse>0 %}
           <tr>
-           <td style="width:13%;">{{ chapelle.name }}</td>
+           <td style="width:13%; background-color:#f90;">{{ chapelle.name }}</td>
            {% for ladate in lesdates %}
-        <td style="width:12%;">
+        <td style="width:12%; background-color:#fff;">
          {% for messe in messes %} 
         {% if chapelle.id==messe.reservationEglise.salle and ladate==messe.dateheure|date('Y/m/d') %}
              {{messe.dateheure|date('H:i')}}<br>
@@ -204,7 +196,7 @@ th
             
          {% endfor %}
          </table>
-         
+         <h4 style="margin-top: 2%%;">Planning publié le {{ "now"|date("d/m/Y") }}</h4>
     </body>
 </html>
 
@@ -212,5 +204,6 @@ th
      
      
      
+
 
 
