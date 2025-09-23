@@ -1,0 +1,52 @@
+
+
+
+
+
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>doc24469</title>
+  </head>   
+
+<body>
+
+<h1>Intentions de messes</h1>
+
+
+{% set la_date="" %}
+
+ 
+{% for messe in messes %}
+   
+    {% if (messe.dateheure|date('Y-m-d')>=options.debut) and (options.fin>=messe.dateheure|date('Y-m-d')) %}
+    
+    {% if messe.dateheure|date('Y-m-d')!=la_date and messe.intentions|length>0%} 
+    
+        {% set la_date=messe.dateheure|date('Y-m-d') %} 
+       
+  
+       <b>{{ la_date|format_datetime('full','none',locale='fr') }} </b><br>
+    
+    
+    {% endif %}
+     
+    {% if messe.intentions|length>0 %}
+   <span style="font-style: italic; text-decoration: underline;">{{messe.dateheure|date('H-i')}}  {{messe.reservationEglise.salle}}</span><br>
+    
+       
+        {% for intention in messe.intentions %}
+          - {{ intention.intention }}<br>
+        {% endfor %}
+         
+       
+   
+    {% endif %}
+    {% endif %}
+    
+ {% endfor %}
+
+</body>
