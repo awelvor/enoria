@@ -38,13 +38,17 @@ th
 
 }
 </style>
+
+
+
+
 <!doctype html>
-<html>
+<html  lang="fr">
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>doc24860</title>
-  </head>
+    </head>
      <body>
      {# Affichage du logo et des coordonnées de la paroisse xx #}
    
@@ -59,8 +63,8 @@ th
 			{%set  titrechoisi='' %}
                 
                 {% for messe in messes %}
-                    {% if loop.first %} {%set  titrechoisi='  du  ' ~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM') %}{% endif %}
-                    {% if loop.last %} {%set  titrechoisi=titrechoisi~' '~'au  '~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM')%}{% endif %}
+                    {% if loop.first %} {%set  titrechoisi='  du  ' ~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM', locale: 'fr') %}{% endif %}
+                    {% if loop.last %} {%set  titrechoisi=titrechoisi~' '~'au  '~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM', locale: 'fr')%}{% endif %}
                 {% endfor %}
                 
             {%set titrechoisi='Planning hebdomadaire des célébrations ' ~ titrechoisi %}
@@ -91,22 +95,27 @@ th
 {id:"Pleumeur-Bodou Chapelle Saint-Antoine",name:"Chapelle Saint Antoine "},
 {id:"Rospez Chapelle Saint-Dogmaël",name:"Chapelle Saint-Dogmaël"},
 {id:"Lannion Chapelle Saint-Joseph",name:"Chapelle Saint Joseph"},
+{id:"Lannion Saint-Marc",name:"Chapelle Saint-Marc"},
 {id:"Lannion Chapelle Saint-Nicodème – Servel",name:"Chapelle Saint-Nicodème"},
 {id:"Ploubezre Chapelle Sainte-Thècle",name:"Chapelle Sainte Thècle"},
 {id:"Lannion Chapelle Saint-Thurien -Servel",name:"Chapelle Saint-Thurien"},
-{id:"Rospez Chapelle Saint-André de la Ville Blanche",name:"Chapelle Ville Blanche"},
+{id:"Rospez Chapelle de la Ville Blanche",name:"Chapelle Ville Blanche"},
 {id:"Lannion Chapelle Ecole Jeanne d'Arc",name:"Ecole Jeanne d'Arc"},
 {id:"Lanmérin Saint Mérin",name:"Lanmérin"},
 {id:"Lanvézeac Saint-Ezéchiel",name:"Eglise Saint-Ezéchiel"},
+{id:"Kerbors Kerbors",name:"Kerbors"},
 {id:"Ploubezre Chapelle de Kerfons",name:"Kerfons"},
 {id:"Lannion EHPAD Kergomar",name:"Kergomar Ehpad"},
 {id:"Lannion Ehpad Kergomar",name:"Kergomar Ehpad"},
-{id:"Lannion Saint-Marc",name:"Chapelle Saint-Marc"},
+{id:"Kermaria-Sulard Kermaria-Sulard",name:"Kermaria-Sulard"},
+{id:"Langoat Langoat",name:"Langoat"},
 {id:"Trébeurden EHPAD Le Gavel",name:"Le Gavel Ehpad"},
 {id:"Trébeurden Ehpad du Gavel",name:"Le Gavel Ehpad"},
 {id:"Loguivy lès Lannion Saint-Ivy",name:"Loguivy-Lès-Lannion"},
 {id:"Loguivy-lès-Lannion Saint-Ivy",name:"Loguivy-Lès-Lannion"},
+{id:"Loguivy-Plougras Loguivy-Plougras",name:"Loguivy-Plougras"},
 {id:"Lannion Saint-Ivy - Loguivy-lès-Lannion",name:"Loguivy-lès-Lannion"},
+{id:"Minihy-Tréguier Minihy-Tréguier",name:"Minihy-Tréguier"},
 {id:"Lannion Notre Dame des Fontaines",name:"Notre Dame des Fontaines"},
 {id:"Lanmérin Chapelle N.D. de la Salle",name:"Notre Dame de la Salle"},
 {id:"Lanmérin Chapelle Notre Dame de la Salle",name:"Notre Dame de la Salle"},
@@ -124,14 +133,17 @@ th
 {id:"Ploubezre Saint-Pierre et Saint-Paul pbz",name:"Ploubezre"},
 {id:"Ploubezre Saint-Pierre et Saint-Paul",name:"Ploubezre"},
 {id:"Ploulec'h Saint-Pierre et Saint-Paul plh",name:"Ploulec'h"},
+{id:"Ploulec'h Saint-Pierre et Saint-Paul",name:"Ploulec'h"},
 {id:"Rospez Saint-Pierre et Saint-Paul à Rospez",name:"Rospez"},
 {id:"Rospez Saint-Pierre et Saint-Paul à Rospez",name:"Rospez"},
 {id:"Rospez Saint-Pierre et Saint-Paul",name:"Saint-Dogmaël"},
 {id:"Ploulec'h Chapelle de Saint Herbot",name:"Saint-Herbot"},
 {id:"Lannion Chapelle école Saint-Joseph",name:"Saint-Joseph"},
 {id:"Pleumeur-Bodou Saint-Marc, Ile Grande",name:"Saint-Marc Ile Grande"},
+{id:"Saint-Michel en Grève Saint-Michel en Grève", name:"Saint-Michel en Grève"},
 {id:"Lannion, Servel",name:"Saint-Nicodème"},
-{id:"Servel Chapelle Saint-Nicodème",name:"Saint-Nicodème"},         
+{id:"Servel Chapelle Saint-Nicodème",name:"Saint-Nicodème"}, 
+{id:"Saint-Quay-Perros Saint-Quay-Perros", name:"Saint-Quay-Perros"},
 {id:"Pleumeur-Bodou Chapelle de Saint Samson",name:"Saint-Samson"},
 {id:"Pleumeur-Bodou Chapelle de Saint-Samson",name:"Saint-Samson"},
 {id:"Servel Chapelle Saint Thurien",name:"Saint-Thurien"},
@@ -145,8 +157,12 @@ th
 {id:"Servel Chapelle Saint-Thurien",name:"Saint-Thurien"},
 {id:"Lannion Saint-Yves",name:"Saint-Yves"},
 {id:"Servel Saint-Pierre à Servel",name:"Servel"},
+{id:"Trébeurden Sainte Trinité",name:"Trébeurden"},
+{id:"Trégastel Sainte-Anne Trégastel", name:"Trégastel"},
+{id:"Trégrom Trégrom", name:"Trégrom"},
+{id:"Trévou-Tréguignec Trévou-Tréguignec", name:"Trévou-Tréguignec"},
 {id:"Trézény Saint-Zény",name:"Trézény"},
-{id:"Trébeurden Sainte Trinité",name:"Trébeurden"}
+{id:"Vieux Marché Vieux Marché",name:"Vieux Marché"}
 ] %}
          
 {% for messe in messes %} 
@@ -157,9 +173,9 @@ th
            
  <table>
          <tr>
-             <td  style="background-color:#f90;">PBN</td>
+             <td  style="background-color:#f90;font-weight: bold;">PBN</td>
              {% for ladate in lesdates %}
-             <td style="background-color:#f90;">{{ (ladate~' 00:00:00')|format_datetime(locale='fr', pattern='EEEE') }}<br>{{ (ladate~' 00:00:00')|date('d/m')}}</td>
+             <td style="background-color:#f90;font-weight: bold;">{{ (ladate~' 00:00:00')|format_datetime(locale='fr', pattern='EEEE') }}<br>{{ (ladate~' 00:00:00')|date('d/m')}}</td>
              {% endfor %}
          </tr>
          {% for chapelle in chapelles %}
@@ -177,7 +193,7 @@ th
            
          {% if nmesse>0 %}
           <tr>
-           <td style="width:13%; background-color:#f90;">{{ chapelle.name }}</td>
+           <td style="width:13%; background-color:#f90;font-weight: bold;">{{ chapelle.name }}</td>
            {% for ladate in lesdates %}
         <td style="width:12%; background-color:#fff;">
          {% for messe in messes %} 
@@ -186,7 +202,8 @@ th
             
             {{ messe.informations }}<br>
             
-            {% for cel in messe.celebrants %}<b>{{cel.personne.prenom}}</b>{% endfor %}
+            {% for cel in messe.celebrants %}<b>{{cel.personne.prenom}}</b><br>{% endfor %}
+            
          {% endif %}
          {% endfor %}
               </td>
@@ -204,6 +221,5 @@ th
      
      
      
-
 
 
