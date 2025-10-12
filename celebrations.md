@@ -15,3 +15,10 @@
 |2025-10-30|[doc24860](https://web.enoria.app/tools/documentspdf/?m=667124,666858&cel=&ac=&titredoc=&doc=24860&orientation=landscape&preview=pdf&format=a4)|[doc25408](https://web.enoria.app/tools/documentspdf/?m=667124,666858&cel=&ac=&titredoc=&doc=25408&orientation=landscape&preview=html&format=a4)|
 |2025-10-31|[doc24860](https://web.enoria.app/tools/documentspdf/?m=667139,734675,719190&cel=6990&ac=&titredoc=&doc=24860&orientation=landscape&preview=pdf&format=a4)|[doc25408](https://web.enoria.app/tools/documentspdf/?m=667139,734675,719190&cel=6990&ac=&titredoc=&doc=25408&orientation=landscape&preview=html&format=a4)|
 
+planning hebdomadaire
+
+|semaine|doc24860|doc25408|
+|---|---|---|
+|semaine42|[semaine42](https://web.enoria.app/tools/documentspdf/?m=667093,715295,639273,667075,667110,667122,666853,715296,667137,734623,684675,666599,684676,623120,667054&cel=5792,6990,6990,5792,6990,6990,5792,6970,6990,6990,5792,6970,6990,6970,6990&ac=91983,91984,87737&titredoc=&doc=24860&orientation=landscape&preview=pdf&format=a4)|[semaine42](https://web.enoria.app/tools/documentspdf/?m=667093,715295,639273,667075,667110,667122,666853,715296,667137,734623,684675,666599,684676,623120,667054&cel=5792,6990,6990,5792,6990,6990,5792,6970,6990,6990,5792,6970,6990,6970,6990&ac=91983,91984,87737&titredoc=&doc=25408&orientation=landscape&preview=html&format=a4)|
+
+
