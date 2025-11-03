@@ -1,8 +1,8 @@
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: exemple.yml
 on: [push]
 jobs:
-  check-bats-version:
+  etap1:
     runs-on: ubuntu-latest
     steps:
       - run: echo "lundi 3 novembre"
