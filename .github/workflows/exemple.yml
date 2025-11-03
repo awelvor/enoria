@@ -2,7 +2,7 @@ name: learn-github-actions
 run-name: exemple.yml
 on: [push]
 jobs:
-  etap1:
+  etape1:
     runs-on: ubuntu-latest
     steps:
       - run: echo "lundi 3 novembre"
