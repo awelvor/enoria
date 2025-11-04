@@ -1,6 +1,6 @@
 name: learn-github-actions
 run-name: exemple.yml
-on: [push]
+on: push
 jobs:
   etape1:
     runs-on: ubuntu-latest
