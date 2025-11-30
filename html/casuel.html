@@ -1,0 +1,199 @@
+<html>
+{# **************************************************************************
+Version 1.9 - 29/10/2024 - Baptême - Rappel casuel - Lettre
+Ce modèle est conçu pour être publié en format portrait.
+Attention: la valeur de la fonction du responsable ecclésiastique correspond à la valeur du champ "Profession" de la fiche personnelle.
+Plusieurs éléments de ce modèles sont paramétrables ci-dessous (juste après ce bloc de commentaire): 
+- montant de l'offrande conseillée
+- pour le pied de page: mail d'un contact paroisse et adresse du site web de la paroisse
+
+Liste des modifications:
+- Adaptation du code CSS pour l'affichage correct des marges du document. (1.9)
+- Remplacement des paramètres par des valeurs génériques. (v 1.8)
+- Ajustement de la largeur d'affichage de la commune en en-tête de lettre. (v 1.8)
+- Correction du format d'affichage des dates. (v 1.7)
+- Correction d'affichage du logo pour les entités liées. (v 1.6)
+- Affichage des prénom, nom et fonction du responsable ecclésiastique pour la signature du courrier (v 1.6)
+- Prise en compte de la ville de l'adresse de l'église au lieu du nom du lieu. (v 1.5)
+- Correction du format date (v 1.4)
+- Correction affichage logo (v 1.4)
+- Correction affichage lieu principal de la paroisse (v 1.4)
+- Filtrage exclusif des baptêmes célébrés dans la paroisse (v 1.4)
+- Mise en valeur des éléments paramétrables (v 1.4)
+
+Si vous constatez un dysfonctionnement à partir de ce modèle, 
+merci d'adresser votre remarque à perecedric@association-enoria.org
+***************************************************************************** #}
+<body>
+{# *** éléments paramétrables *** #}
+	{% set offrandeconseillee = 'entre 60 et 300 euros' %}
+	{% set mailcontact = app.user.entiteActive.mailContact %}
+	{% set siteweb = app.user.entiteActive.siteWeb %}
+{# *** fin des éléments paramétrables *** #}
+
+{% set ListeCasuelsVerses = [] %}
+{% set ListeBaptises = [] %}
+{% set ListeCasuelsNonVerses = [] %}
+
+{% for personne in personnes %}
+	{% for sacrement in personne.sacrements %}
+		{% if sacrement.type == 'bapteme' %}
+			{% if personne.IsBapteme =="T" %}
+				{% for aff in sacrement.casuels %}
+					{% for foyer in personne.membrefoyer %}
+						{% if loop.first %}
+							{% if foyer.id == aff.paiement.foyer.id %}
+								{% if foyer.id not in ListeBaptises %}
+									{% set ListeCasuelsVerses = ListeCasuelsVerses|merge([foyer]) %}
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+{% for personne in personnes %}
+	{% for sacrement in personne.sacrements %}
+		{% if sacrement.type == 'bapteme' %}
+			{% if personne.IsBapteme =="T" %}
+				{% for foyer in personne.membrefoyer %}
+					{% if loop.first %}
+						{% set ListeBaptises = ListeBaptises|merge([foyer]) %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+{% for foyer in ListeBaptises %}
+	{% if foyer not in ListeCasuelsVerses %}
+		{% set ListeCasuelsNonVerses = ListeCasuelsNonVerses|merge([foyer]) %}
+	{% endif %}
+{% endfor %}
+
+{% for personne in personnes %}
+	{% for sacrement in personne.sacrements %}
+		{% if sacrement.type == 'bapteme' %}
+			{% if sacrement.dossier.lieuCelebrationExterieure =="" %}
+				{% if personne.IsBapteme =="T" %}
+					{% for foyer in personne.membrefoyer %}
+						{% if foyer in ListeCasuelsNonVerses %}
+
+<main backtop="0mm" backbottom="5mm" backleft="7mm" backright="7mm"  >
+    <table width="480" border="0" class="tableau">
+        <tr>
+            <td width="230" align="left">
+				{% if loop.first %}
+					{% if sacrement.entiteLiee.logo %}
+						<img src="{{ dir_absolute_public }}/images/{{ asset(sacrement.entiteLiee.logo|default) }}" width="120"/>
+					{% elseif app.user.entiteActive.logo %}
+						<img src="{{ dir_absolute_public }}/images/{{ asset(app.user.entiteactive.logo|default) }}"  width="120"/>
+					{% endif %}
+				{% endif %}
+			</td>
+            <td width="250">
+                <p class="textenormal-droite" align="right">
+				{{ app.user.entiteActive.adresse.ville }}, le {{"now"|format_datetime('long','none',locale='fr') }}</p><br/>
+				<p class="textenormal">
+					{% if foyer.pere and foyer.mere %}
+						{% if foyer.pere.nom == foyer.mere.nom %}
+							<div>{{ foyer.pere.titrecourt }} et {{ foyer.mere.titrecourt }} {{ foyer.pere.prenom }} {% if personne.particuleNom %}{{ personne.particuleNom }} {% endif %}{{ foyer.pere.nom }}</div>
+						{% else %}
+							<div>{{ foyer.pere.nomcomplet }}</div>
+							<div>et {{ foyer.mere.nomcomplet }}</div>
+						{% endif %}
+					{% elseif foyer.pere and not foyer.mere %}
+						{% if foyer.adressePostale %}
+							<div>{{ foyer.pere.nomcomplet }}</div>
+						{% endif %}
+					{% elseif foyer.mere and not foyer.pere %}
+						{% if foyer.adressePostale %}
+							<div>{{ foyer.mere.nomcomplet }}</div>
+						{% endif %}
+					{% endif %}
+					{% if foyer.adressePostale %}
+						<div>{{ foyer.adressePostale.numeroRue }} {{ foyer.adressePostale.rue }}</div>
+						<div style="text-transform: uppercase;">{{ foyer.adressePostale.cp }} {{ foyer.adressePostale.ville }}</div></p>
+					{% endif %}
+            </td>
+        </tr>
+    </table>
+	
+	<p class="textenormal"><b><u>Objet</u> :</b><br/>
+	Offrande pour la célébration du baptême de votre enfant</p><p> </p>
+
+	<p class="textenormal">Madame, Monsieur,</p>
+	<p class="textenormal">       Vous savez sans doute que pour vivre et continuer sa mission, l’Eglise n’a d’autres ressources que les dons des fidèles : Denier de l’Eglise, quêtes et aussi offrandes pour les messes et autres cérémonies : baptêmes, mariages, funérailles.</p>
+	<p class="textenormal">       Comme dans la plupart des diocèses, notre évêque invite les parents à verser une offrande, à l’occasion du baptême de leur enfant, et propose un montant 
+	<b>{{ offrandeconseillee }}</b>.
+	</p>
+	<p class="textenormal">       Nous nous sommes réjouis de célébrer le baptême de 
+	<b>{{ personne.prenom }}</b>, le
+	{% if personne.dateBapteme %}<b>{{ personne.dateBapteme|format_datetime('long','none',locale='fr') }}, en
+		{% for sacrement in personne.sacrements %}
+			{% if sacrement.type == 'bapteme' %}
+				{% if sacrement.lieuReservation %}
+					l'{{ sacrement.lieuReservation.salle.nom }} de 
+					{% if sacrement.lieuReservation.salle.adresse.ville %}{{ sacrement.lieuReservation.salle.adresse.ville }}
+					{% else %}{{ sacrement.lieuReservation.salle.lieu }}
+					{% endif %}.
+				{% endif %}
+			{% endif %}
+		{% endfor %}</b>
+	{% endif %}</p>
+	<p class="textenormal">       Nous n’avons pas trouvé trace, à ce jour, d’offrande versée à cette occasion.</p>
+	<p class="textenormal">       Si vous avez déjà versé cette offrande, nous vous en remercions et vous serions reconnaissants de nous préciser si possible la date et le mode de règlement (paiement en ligne, chèque ou espèces).</p>
+	<p class="textenormal">       Au cas où votre situation actuelle ne vous permettrait pas de faire ce geste, n’hésitez pas à nous le signaler. Il vous sera toujours possible de le faire par la suite.</p>
+	<p class="textenormal">       Si vous n’en avez pas encore eu le temps, merci par avance de l’offrande que vous voudrez bien donner, de préférence en ligne. Pour cela, vous pouvez cliquer sur le bouton ci-dessous.</p>
+	<p align="center" style="vertical-align:middle;"><a href="https://public.enoria.app/pubinsc/foyer/login?p=279" target="_blank"><input class="favorite styled" type="button" value="Faire l'offrande en ligne" /></a></p>
+	<p class="textenormal">       Si vous faite votre offrande par chèque, merci de le libeller à l’ordre de « {% if "Paroisse" in app.user.entiteActive.nom %}{{app.user.entiteActive.nom}}{% else %}Paroisse {{app.user.entiteActive.nom}}{% endif %} » *.</p>
+	<p class="textenormal">        Ce courrier se veut amical et fraternel. Nous vous remercions de votre compréhension et vous prions d’agréer, {% if foyer.pere and foyer.mere %}{{ foyer.mere.titre }}, {{ foyer.pere.titre }},{% elseif foyer.mere %}{{ foyer.mere.titre }},{% elseif foyer.pere %}{{ foyer.pere.titre }},{% endif %} l’expression de nos sentiments fraternels. </p>
+	<p> </p><p> </p><p> </p>
+
+	<p class="textenormal-centre" align="center">{{ app.user.entiteActive.responsableEcclesiastique }}, {{ app.user.entiteActive.responsableEcclesiastique.ClasseDetails }}<br/>
+	et le Conseil Economique</p>
+	<p> </p>
+
+	<p class="textenormal"><i>* Sur votre demande, la paroisse pourra vous délivrer un reçu. Celui-ci ne vous permettra pas de bénéficier d’une réduction d’impôt.</i></p>
+	
+	<footer>
+	<p>
+	{% if sacrement.entiteLiee.nom %}
+		{% if "Paroisse" in sacrement.entiteLiee.nom %}
+			{{ sacrement.entiteLiee.nom }}
+		{% else %}
+			Paroisse {{ sacrement.entiteLiee.nom }}
+		{% endif %}
+		{% if sacrement.entiteLiee.adresse %}
+			, {{ sacrement.entiteLiee.adresse.numeroRue }} {{ sacrement.entiteLiee.adresse.rue }} - {{ sacrement.entiteLiee.adresse.cp }} {{ sacrement.entiteLiee.adresse.ville }}<br/>
+			Tél. {{ sacrement.entiteLiee.adresse.numeroTelPrincipal }} - {{ mailcontact }} - {{ siteweb }}
+		{% endif %}
+	{% elseif app.user.entiteActive.nom %}
+		{% if "Paroisse" in app.user.entiteActive.nom %}
+			{{ app.user.entiteActive.nom }}
+		{% else %}
+			Paroisse {{  app.user.entiteActive.nom  }}
+		{% endif %}
+		{% if app.user.entiteActive.adresse %}
+			, {{ app.user.entiteActive.adressePostale }}<br/>
+			Tél. {{ app.user.entiteactive.adresse.numeroTelPrincipal }} - {{ mailcontact }} - {{ siteweb }}
+		{% endif %}
+	{% endif %}
+	</p>
+	</footer>
+	
+</main>{% if not loop.last %}<div class="page_break"></div>{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+</body>
+</html>
