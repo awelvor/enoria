@@ -1,0 +1,223 @@
+<style>
+
+html {
+    font-family: Helvetica, Verdana, Georgia, Arial, serif;
+}
+
+img {
+    float: left;
+    margin-right: 10px;
+    width: 75px;
+    height: 75px;
+}
+
+table {
+    font-family: Helvetica, Verdana, Georgia, Arial, serif;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-collapse: collapse;
+    page-break-after: auto ;
+}
+tr,th,td 
+{
+    font-size:11px;
+    padding: 1px;
+    border: 1px solid black;
+    border-collapse: collapse;
+   
+    text-align: center; 
+    vertical-align : middle;
+   
+}
+
+th 
+{
+    background-color: rgb(211,211,211);
+    line-height: 1.0em;
+
+}
+</style>
+
+  <!doctype html>
+<html  lang="fr">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>doc24860</title>
+    </head>
+     <body>
+     {# Affichage du logo et des coordonnées de la paroisse xx #}
+   
+         
+         
+        {# Affichage du titre demandé par l'utilisateur ou "célébrations " & date d édition de cette liste #}
+		{%set  titrechoisi=''%}
+		
+        {% if  titre!='Fiche de messe' %}
+			{%set  titrechoisi=titre %}
+        {% else %}
+			{%set  titrechoisi='' %}
+                
+                {% for messe in messes %}
+                    {% if loop.first %} {%set  titrechoisi='  du  ' ~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM', locale: 'fr') %}{% endif %}
+                    {% if loop.last %} {%set  titrechoisi=titrechoisi~' '~'au  '~ messe.dateheure|format_datetime('none','none',pattern='EEEE dd MMMM', locale: 'fr')%}{% endif %}
+                {% endfor %}
+                
+            {%set titrechoisi='Planning hebdomadaire des célébrations ' ~ titrechoisi %}
+               
+	            
+        {% endif %}
+		
+		
+		<h3>{{titrechoisi}}</h3>
+         
+         {% set leslieux=[] %}
+         {% set lesdates=[] %}
+         
+{% set chapelles=[
+{id:"Lannion Accueil Saint-Jean Salle",name:"Accueil Saint-Jean"},
+{id:"Pleumeur-Bodou Accueil Presbytère",name:"Accueil presbytère PBodou"},
+{id:"Trébeurden",name:"Accueil maison paroissiale"},
+{id:"Brélévenez Sainte Trinité",name:"Brélévenez"},
+{id:"Lannion Sainte Trinité - Brélévenez",name:"Brélévenez"},
+{id:"Buhulien Sainte Marguerite",name:"Buhulien"},
+{id:"Lannion Sainte-Marguerite -Buhulien",name:"Buhulien"},
+{id:"Lannion Sainte Marguerite -Buhulien", name:"Buhulien"},
+{id:"Trébeuden Chapelle de la Bonne Nouvelle",name:"Chapelle de Bonne Nouvelle"},
+{id:"Trébeurden Chapelle la Bonne Nouvelle",name:"Chapelle de Bonne Nouvelle"},
+{id:"Trébeurden Chapelle du Christ",name:"Chapelle de Christ"},
+{id:"Trébeurden Chapelle de Christ",name:"Chapelle de Christ"},
+{id:"Trébeurden Notre Dame de Penvern",name:"Chapelle Notre Dame de Cîteaux"},
+{id:"Lanmérin Chapelle Notre Dame de la Salle",name:"Chapelle Notre Dame de la Salle"},
+{id:"Pleumeur-Bodou Chapelle Saint-Antoine",name:"Chapelle Saint Antoine "},
+{id:"Rospez Chapelle Saint-Dogmaël",name:"Chapelle Saint-Dogmaël"},
+{id:"Lannion Chapelle Saint-Joseph",name:"Chapelle Saint Joseph"},
+{id:"Lannion Saint-Marc",name:"Chapelle Saint-Marc"},
+{id:"Lannion Chapelle Saint-Marc",name:"Chapelle Saint-Marc"},
+{id:"Lannion Chapelle Saint-Nicodème – Servel",name:"Chapelle Saint-Nicodème"},
+{id:"Ploubezre Chapelle Sainte-Thècle",name:"Chapelle Sainte Thècle"},
+{id:"Lannion Chapelle Saint-Thurien -Servel",name:"Chapelle Saint-Thurien"},
+{id:"Rospez Chapelle de la Ville Blanche",name:"Chapelle Ville Blanche"},
+{id:"Lannion Chapelle Ecole Jeanne d'Arc",name:"Ecole Jeanne d'Arc"},
+{id:"Lanmérin Saint Mérin",name:"Lanmérin"},
+{id:"Lanvézeac Saint-Ezéchiel",name:"Eglise Saint-Ezéchiel"},
+{id:"Kerbors Kerbors",name:"Kerbors"},
+{id:"Ploubezre Chapelle de Kerfons",name:"Kerfons"},
+{id:"Lannion EHPAD Kergomar",name:"Kergomar Ehpad"},
+{id:"Lannion Ehpad Kergomar",name:"Kergomar Ehpad"},
+{id:"Kermaria-Sulard Kermaria-Sulard",name:"Kermaria-Sulard"},
+{id:"Lanmérin Saint-Mérin", name:"Lanmérin"},
+{id:"Langoat Langoat",name:"Langoat"},
+{id:"Trébeurden EHPAD Le Gavel",name:"Le Gavel Ehpad"},
+{id:"Trébeurden Ehpad du Gavel",name:"Le Gavel Ehpad"},
+{id:"Loguivy lès Lannion Saint-Ivy",name:"Loguivy-Lès-Lannion"},
+{id:"Loguivy-lès-Lannion Saint-Ivy",name:"Loguivy-Lès-Lannion"},
+{id:"Loguivy-Plougras Loguivy-Plougras",name:"Loguivy-Plougras"},
+{id:"Lannion Saint-Ivy - Loguivy-lès-Lannion",name:"Loguivy-lès-Lannion"},
+{id:"Minihy-Tréguier Minihy-Tréguier",name:"Minihy-Tréguier"},
+{id:"Lannion Notre Dame des Fontaines",name:"Notre Dame des Fontaines"},
+{id:"Lanmérin Chapelle N.D. de la Salle",name:"Notre Dame de la Salle"},
+{id:"Lanmérin Chapelle Notre Dame de la Salle",name:"Notre Dame de la Salle"},
+{id:"Caouennec Notre Dame de Caouënnec",name:"Notre Dame de Caouënnec"},
+{id:"Caouënnec Notre Dame de Caouënnec",name:"Notre Dame de Caouënnec"},
+{id:"Ploulec'h N.D. du Yaudet",name:"Notre Dame du Yaudet"},
+{id:"Ploulec'h Chapelle Notre Dame du Yaudet",name:"Notre Dame du Yaudet"},
+{id:"Brélévenez Oratoire de Brélévenez",name:"Oratoire de Brélévenez"},
+{id:"Saint-Jean du Baly",name:"Oratoire Saint-Jean"},
+{id:"Trébeurden Chapelle de Penvern",name:"Chapelle N.D. de Cïteaux"},
+{id:"Île Grande Saint-Marc",name:"Pleumeur-Bodou, Saint-Marc"},
+{id:"Pleumeur-Bodou Saint-Marc , Ile Grande",name:"Pleumeur-Bodou, Saint-Marc"},
+{id:"Pleumeur-Bodou Saint-Pierre, Bourg",name:"Pleumeur-Bodou"},
+{id:"Pleumeur-Bodou Saint-Pierre PB",name:"Pleumeur-Bodou, Saint-Pierre"},
+{id:"Ploubezre Saint-Pierre et Saint-Paul pbz",name:"Ploubezre"},
+{id:"Ploubezre Saint-Pierre et Saint-Paul",name:"Ploubezre"},
+{id:"Ploulec'h Saint-Pierre et Saint-Paul plh",name:"Ploulec'h"},
+{id:"Ploulec'h Saint-Pierre et Saint-Paul",name:"Ploulec'h"},
+{id:"Rospez Saint-Pierre et Saint-Paul à Rospez",name:"Rospez"},
+{id:"Rospez Saint-Pierre et Saint-Paul à Rospez",name:"Rospez"},
+{id:"Rospez Saint-Pierre et Saint-Paul",name:"Rospez"},
+{id:"Ploulec'h Chapelle de Saint Herbot",name:"Saint-Herbot"},
+{id:"Lannion Chapelle école Saint-Joseph",name:"Saint-Joseph"},
+{id:"Pleumeur-Bodou Saint-Marc, Ile Grande",name:"Saint-Marc Ile Grande"},
+{id:"Saint-Michel en Grève Saint-Michel en Grève", name:"Saint-Michel en Grève"},
+{id:"Lannion, Servel",name:"Saint-Nicodème"},
+{id:"Servel Chapelle Saint-Nicodème",name:"Saint-Nicodème"}, 
+{id:"Saint-Quay-Perros Saint-Quay-Perros", name:"Saint-Quay-Perros"},
+{id:"Pleumeur-Bodou Chapelle de Saint Samson",name:"Saint-Samson"},
+{id:"Pleumeur-Bodou Chapelle de Saint-Samson",name:"Saint-Samson"},
+{id:"Servel Chapelle Saint Thurien",name:"Saint-Thurien"},
+{id:"Pleumeur-Bodou Chapelle de Saint Uzec",name:"Saint-Uzec"},
+{id:"Lannion Saint-Pierre à Servel",name:"Servel"},
+{id:"Lannion EHPAD SAINTE-ANNE",name:"Résidence Sainte Anne"},
+{id:"Lannion Résidence Sainte-Anne",name:"Résidence Sainte Anne"},
+{id:"Lannion",name:"Résidence Hernot"},
+{id:"Lannion Résidence HERNOT",name:"Résidence Hernot"},
+{id:"Lannion Saint-Jean du Baly",name:"Saint-Jean du Baly"},
+{id:"Servel Chapelle Saint-Thurien",name:"Saint-Thurien"},
+{id:"Lannion Saint-Yves",name:"Saint-Yves"},
+{id:"Servel Saint-Pierre à Servel",name:"Servel"},
+{id:"Trébeurden Sainte Trinité",name:"Trébeurden"},
+{id:"Trégastel Sainte-Anne Trégastel", name:"Trégastel"},
+{id:"Trégrom Trégrom", name:"Trégrom"},
+{id:"Trévou-Tréguignec Trévou-Tréguignec", name:"Trévou-Tréguignec"},
+{id:"Trézény Saint-Zény",name:"Trézény"},
+{id:"Vieux Marché Vieux Marché",name:"Vieux Marché"}
+] %}
+         
+{% for messe in messes %} 
+     {#  {{ messe.reservationEglise.salle}} <br> #}
+     {% if messe.reservationEglise.salle not in leslieux %} {% set leslieux=leslieux|merge([messe.reservationEglise.salle]) %} {% endif %}
+     {% if messe.dateheure|date('Y/m/d') not in lesdates %} {% set lesdates=lesdates|merge([messe.dateheure|date('Y/m/d')]) %} {% endif %}
+    {% endfor %}
+           
+ <table>
+         <tr>
+             <td  style="background-color:#f90;font-weight: bold;">PBN</td>
+             {% for ladate in lesdates %}
+             <td style="background-color:#f90;font-weight: bold;">{{ (ladate~' 00:00:00')|format_datetime(locale='fr', pattern='EEEE') }}<br>{{ (ladate~' 00:00:00')|date('d/m')}}</td>
+             {% endfor %}
+         </tr>
+         {% for chapelle in chapelles %}
+         {# avant d'afficher un nouveau lieu, il faut savoir s'il y a des messes sur ce lieu #}
+          {% set nmesse=0 %}
+          
+           
+           {% for ladate in lesdates %}
+       
+         {% for messe in messes %} 
+        {% if chapelle.id==messe.reservationEglise.salle and ladate==messe.dateheure|date('Y/m/d') %}{% set nmesse= nmesse +1 %}{% endif %}
+         {% endfor %}
+              
+         {% endfor %}
+           
+         {% if nmesse>0 %}
+          <tr>
+           <td style="width:13%; background-color:#f90;font-weight: bold;">{{ chapelle.name }}</td>
+           {% for ladate in lesdates %}
+        <td style="width:12%; background-color:#fff;">
+         {% for messe in messes %} 
+        {% if chapelle.id==messe.reservationEglise.salle and ladate==messe.dateheure|date('Y/m/d') %}
+             {{messe.dateheure|date('H:i')}}<br>
+            
+            {{ messe.informations }}<br>
+            
+            {% for cel in messe.celebrants %}<b>{{cel.personne.prenom}}</b><br>{% endfor %}
+            
+         {% endif %}
+         {% endfor %}
+              </td>
+         {% endfor %}
+            </tr>
+             {% endif %}
+            
+         {% endfor %}
+         </table>
+         <h4 style="margin-top: 2%%;">Planning publié le {{ "now"|date("d/m/Y") }}</h4>
+    </body>
+</html>
+
+     
+     
+     
+     
