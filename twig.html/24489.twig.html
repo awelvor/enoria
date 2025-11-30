@@ -1,0 +1,276 @@
+<style> 
+* { font-family: DejaVu Sans, 'Helvetica Neue', Helvetica, sans-serif; }
+
+div.positiona {
+position: fixed;
+top: 10px;
+left: 306px;
+border-style:none;
+background-color: #fff;
+width: 395px;
+height: 395px;
+font-size: 13px;
+font-family: sans-serif;
+}
+
+div.positionb {
+position: fixed;
+top: 400px;
+left: 306px;
+border-style:none;
+background-color: #fff;
+width: 395px;
+height: 395px;
+font-size: 13px;
+font-family: sans-serif;
+}
+</style>
+
+
+<body>
+    
+{# 1 - Initialisation #}
+    
+    <div style=" font-family:sans-serif; font-size: 15px;border-style: none; margin: 100px 0 0 0;" >
+    <h2 style="color:red; text-align:center;">Paroisse Bonne Nouvelle - LANNION</h2>
+    <h1> Bandeau Adresses DRAL  </h1>
+    <h3 >Edité à partir de Enoria par {{app.user.Personne.NomComplet}}, le {{"now"|date("d/m/Y")}}</h3>
+        <p>2025-08-05</p>
+        <p>Abonnements rejetés parceque périmés :<p>
+    </div>
+ 
+{% set npage =  0                                                     %}
+{% set nfin =  0                                                      %}
+{% set nBandeau =  0                                                  %}
+{% set rows=[]                                                        %}
+{% set dateDepot = "now"|date("d/m/Y", "Europe/Paris")                %}
+{% set dateDist  = "now"|date("d/m/Y", "Europe/Paris")                %}
+{% set thebac    = 0                                                  %}
+{% set numeroRue = 0 %}
+{% set rue = "rue"  %}
+{% set complementAdresse = "complement" %}
+{% set cp = 22300 %}
+{% set ville = "paris" %}
+    
+{# 2 - Variable Globales         #}
+{%         if (options.mybac=='Sept'  ) %}{% set thebac=7 %}
+    {% elseif (options.mybac=='Six'   ) %}{% set thebac=6 %}
+    {% elseif (options.mybac=='Cinq'  ) %}{% set thebac=5 %}
+    {% elseif (options.mybac=='Quatre') %}{% set thebac=4 %}
+    {% elseif (options.mybac=='Trois' ) %}{% set thebac=3 %}
+    {% elseif (options.mybac=='Deux'  ) %}{% set thebac=2 %}
+    {% else                             %}{% set thebac=1 %}
+    {% endif                            %}
+    
+    {%     if (options.mydepot=='Quinze'   ) %}{% set dateDepot = "now"|date_modify("+15 day")|date("d/m/Y", "Europe/Paris")               %}
+    {% elseif (options.mydepot=='Quatorze' ) %}{% set dateDepot = "now"|date_modify("+14 day")|date("d/m/Y", "Europe/Paris")               %}
+    {% elseif (options.mydepot=='Treize'   ) %}{% set dateDepot = "now"|date_modify("+13 day")|date("d/m/Y", "Europe/Paris")               %}
+    {% elseif (options.mydepot=='Douze'    ) %}{% set dateDepot = "now"|date_modify("+12 day")|date("d/m/Y", "Europe/Paris")               %}
+    {% elseif (options.mydepot=='Onze'     ) %}{% set dateDepot = "now"|date_modify("+11 day")|date("d/m/Y", "Europe/Paris")               %}
+    {% elseif (options.mydepot=='Dix'      ) %}{% set dateDepot = "now"|date_modify("+10 day")|date("d/m/Y", "Europe/Paris")               %}
+    {% elseif (options.mydepot=='Neuf'     ) %}{% set dateDepot = "now"|date_modify("+9 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Huit'     ) %}{% set dateDepot = "now"|date_modify("+8 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Sept'     ) %}{% set dateDepot = "now"|date_modify("+7 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Six'      ) %}{% set dateDepot = "now"|date_modify("+6 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Cinq'     ) %}{% set dateDepot = "now"|date_modify("+5 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Quatre'   ) %}{% set dateDepot = "now"|date_modify("+4 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Trois'    ) %}{% set dateDepot = "now"|date_modify("+3 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Deux'     ) %}{% set dateDepot = "now"|date_modify("+2 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydepot=='Un'       ) %}{% set dateDepot = "now"|date_modify("+1 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% else                                  %}{% set dateDepot = "now"|date_modify("+0 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% endif                            %}
+
+    {%     if (options.mydist=='Quinze'  ) %}{% set dateDist = "now"|date_modify("+15 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Quatorze') %}{% set dateDist = "now"|date_modify("+14 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Treize' ) %}{% set dateDist = "now"|date_modify("+13 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Douze' ) %}{% set dateDist = "now"|date_modify("+12 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Onze'  ) %}{% set dateDist = "now"|date_modify("+11 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Dix'   ) %}{% set dateDist = "now"|date_modify("+10 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Neuf'  ) %}{% set dateDist = "now"|date_modify("+9 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Huit'  ) %}{% set dateDist = "now"|date_modify("+8 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Sept'  ) %}{% set dateDist = "now"|date_modify("+7 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Six'   ) %}{% set dateDist = "now"|date_modify("+6 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Cinq'  ) %}{% set dateDist = "now"|date_modify("+5 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Quatre') %}{% set dateDist = "now"|date_modify("+4 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Trois' ) %}{% set dateDist = "now"|date_modify("+3 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Deux'  ) %}{% set dateDist = "now"|date_modify("+2 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% elseif (options.mydist=='Un'    ) %}{% set dateDist = "now"|date_modify("+1 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% else                              %}{% set dateDist = "now"|date_modify("+0 day")|date("d/m/Y", "Europe/Paris")                %}
+    {% endif                            %}
+
+ {# 3 - Lecture table inscritions -> construction table rows   #}
+
+    
+{% for inscription  in inscriptions %}
+    {% set abonne = 0 %}
+    {% set bac = 0 %}
+    {% set fin_abonnement = "" %}
+    {% set pm = false %}
+    {% set centreDist = "" %}
+    {% set tourneeFacteur = 0 %}
+    {% set dist = "" %}
+    {% set personneMorale = "" %}
+    {% set bac = 0      %}
+    
+    {% for value in inscription.valuesExtras %}
+    {%     if value.champExtra.id==47010 %}{% set fin_abonnement = value.value %}
+    {% elseif value.champExtra.id==47013 %}{% set abonne         = value.value %}
+    {% elseif value.champExtra.id==47426 %}{% set bac            = value.value %}
+    {% elseif value.champExtra.id==47077 %}{% set dist           = value.value %}
+    {% elseif value.champExtra.id==47078 %}{% set centreDist     = value.value %}
+    {% elseif value.champExtra.id==47087 %}{% set tourneeFacteur = value.value %}
+    {% elseif value.champExtra.id==57457 %}{% set personneMorale = value.value %}
+    {% endif %}
+    {% endfor %}
+    
+    {% for foyer in inscription.personne.membrefoyer %}
+    {% set numeroRue = foyer.adressePostale.numeroRue %}
+    {% set rue = foyer.adressePostale.rue  %}
+    {% set complementAdresse = foyer.adressePostale.complementAdresse %}
+    {% set cp = foyer.adressePostale.cp %}
+    {% set ville = foyer.adressePostale.ville %}
+    {% endfor %}
+
+{% if     (bac==thebac) %}
+{% if  (date(fin_abonnement) >= date('-30days')) or not(fin_abonnement)  %}
+{% set nBandeau =  nBandeau +1                                          %}
+{% set ligne=[{
+dateDepot:dateDepot,
+dateDist:dateDist,
+titre:inscription.personne.titre,
+nom:inscription.personne.nom,
+particule:inscription.personne.particuleNom,
+prenom:inscription.personne.prenom,
+fin_abo:fin_abonnement,
+abonne:abonne,
+bac:bac,
+personneMorale:personneMorale,
+numeroRue: numeroRue,
+rue: rue,  
+complementAdresse: complementAdresse,
+cp: cp, 
+ville: ville,   
+dist:dist,
+tourneeFacteur:tourneeFacteur,
+centreDist:centreDist
+}] %}
+{% set rows = rows|merge(ligne) %}
+{% else %}
+    {{ inscription.personne.nom }}  {{ fin_abonnement }}<br>
+{% endif %}
+{% endif %}
+    
+{% endfor %}
+<p>Ce fichier comporte {{ nBandeau }} Bandeaux.</p>  
+    
+    {# 4 Affichage #}
+{% for row in rows|sort((a, b) => a.tourneeFacteur <=> b.tourneeFacteur) %}
+{% set npage = npage +1    %}
+{% if npage is odd  %}  <div style="page-break-before: always; margin: 0 0 0 0;"></div>{% endif %}
+<div {% if npage is odd %} class="positiona"{% else %}class="positionb"{% endif %} >
+            <div style="display: inline-block; border-style: none none dashed none;">
+                <div style="text-align: right; margin: 0 0 0 0; border-style: none;">
+                     Déposé le {{ dateDepot}}<br/>
+                    A distribuer avant le {{ dateDist }}
+                </div>
+                <div style=" margin: 10px 0 0 0;display: inline-block;border-style: none;">D'UNE RIVE A L'AUTRE<br>
+                Paroisse de la Bonne Nouvelle<br>
+                1, rue Saint Yves<br>
+                22300 LANNION
+                </div>
+             </div>
+    <div  style="display: inline-block;border-style: none;">LANNION PDC1<br>
+                    <span style="font-size: 60px;font-weight: bold; margin: 0;">P4</span><br>
+               LA POSTE<br>
+                DISPENSE DE TIMBRAGE
+    </div>
+    
+    <div style="display: inline-block;border-style: none;">
+    {{ row.abonne }}<span style="font-weight: bold; margin: 0 0 0 300px; font-size: 14px;">1-{{ row.bac }}</span>
+    </div> 
+    <div style="margin: 0 0 0 0;border-style: none;">
+        {% if  (row.personneMorale!="Oui")  %}
+        {% if (row.fin_abo|length == 10) %}
+        {% if (date(row.fin_abo) >= date())  %}
+            Votre abonnement se termine le <span style="background-color: yellow;">{{ row.fin_abo|date("d/m/Y") }}</span>
+        {% else %}
+        Votre abonnement est échu depuis le <span style="background-color: yellow;">{{ row.fin_abo|date("d/m/Y") }}</span>,  pensez à le renouveler.
+        {% endif %}
+        {% endif %}
+        {% endif %}
+    </div>
+     
+    <div style="margin: 0 0 0 0;border-style: none;">
+        <strong>
+            {% if (row.personneMorale!="Oui") %}{{row.titre}} {% endif %}
+            {{row.prenom}} 
+            {% if (row.particule) %}{{row.particule}} {% endif %}
+            {{row.nom}}
+        </strong>
+    </div>
+    <div style="border-style: none; margin: 0 0 0 0;">{{row.numeroRue}} {{row.rue}} {{row.complementAdresse}}</div>
+    <div style="border-style: none none dashed none; margin: 0 0 0 0;">{{row.cp}} {{row.ville|upper }}</div>
+     
+
+    <div style="margin: 0 0 0 0;border-style: none;">
+        {{ row.cp }} {{ row.dist }}   <span style="margin:0 0 0 200px; font-size: 14px;font-weight: bold;">  {{ row.tourneeFacteur }}</span> <br>
+        <span style="margin: 0 0 20px 0px;">{{ row.centreDist }}</span>
+    </div>
+    </div>
+{% endfor %}
+
+{% if npage is odd  %}
+<div class="positionb" style="color: #fff">
+            <div style="display: inline-block; border-style: none none dashed none;">
+                <div style="text-align: right; margin: 0 0 0 0; border-style: none;">
+                     Déposé le {{ dateDepot}}<br/>
+                    A distribuer avant le {{ dateDist }}
+                </div>
+                <div style=" margin: 10px 0 0 0;display: inline-block;border-style: none;">D'UNE RIVE A L'AUTRE<br>
+                Paroisse de la Bonne Nouvelle<br>
+                1, rue Saint Yves<br>
+                22300 LANNION
+                </div>
+             </div>
+             <div  style="display: inline-block;border-style: none;">LANNION PDC1<br>
+                    <span style="font-size: 60px;font-weight: bold; margin: 0;">P4</span><br>
+               LA POSTE<br>
+                DISPENSE DE TIMBRAGE
+             </div>
+    
+    <div style="display: inline-block;border-style: none;">
+    {{ row.abonne }}<span style="font-weight: bold; margin: 0 0 0 300px; font-size: 14px;">1-{{ row.bac }}</span>
+    </div> 
+    <div style="margin: 0 0 0 0;border-style: none;">
+        {% if  (row.personneMorale!="Oui")  %}
+        {% if (row.fin_abo|length == 10) %}
+        {% if (date(row.fin_abo) >= date())  %}
+            Votre abonnement se termine le <span style="background-color: yellow;">{{ row.fin_abo|date("d/m/Y") }}</span>
+        {% else %}
+        Votre abonnement est échu depuis le <span style="background-color: yellow;">{{ row.fin_abo|date("d/m/Y") }}</span>,  pensez à le renouveler.
+        {% endif %}
+        {% endif %}
+        {% endif %}
+    </div>
+     
+    <div style="margin: 0 0 0 0;border-style: none;">
+        <strong>
+            {% if (row.personneMorale!="Oui") %}{{row.titre}} {% endif %}
+            {{row.prenom}} 
+            {% if (row.particule) %}{{row.particule}} {% endif %}
+            {{row.nom}}
+        </strong>
+    </div>
+    <div style="border-style: none; margin: 0 0 0 0;">{{row.numeroRue}} {{row.rue}} {{row.complementAdresse}}</div>
+    <div style="border-style: none none dashed none; margin: 0 0 0 0;">{{row.cp}} {{row.ville|upper }}</div>
+     
+
+    <div style="margin: 0 0 0 0;border-style: none;">
+        {{ row.cp }} {{ row.dist }}   <span style="margin:0 0 0 200px; font-size: 14px;font-weight: bold;">  {{ row.tourneeFacteur }}</span> <br>
+        <span style="margin: 0 0 20px 0px;">{{ row.centreDist }}</span>
+    </div>
+    
+</div>
+{% endif %}
+    
+ </body>
