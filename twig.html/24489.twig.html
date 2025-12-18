@@ -27,6 +27,13 @@ font-family: sans-serif;
 </style>
 
 
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>doc24489</title>
+  </head>
 <body>
     
 {# 1 - Initialisation #}
@@ -156,7 +163,7 @@ centreDist:centreDist
 }] %}
 {% set rows = rows|merge(ligne) %}
 {% else %}
-    {{ inscription.personne.nom }}  {{ fin_abonnement }}<br>
+{{ inscription.personne.nom }}  {{ fin_abonnement }}<br>
 {% endif %}
 {% endif %}
     
@@ -274,3 +281,4 @@ centreDist:centreDist
 {% endif %}
     
  </body>
+        </html>
