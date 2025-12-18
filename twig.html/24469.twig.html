@@ -22,10 +22,7 @@
     
         {% set la_date=messe.dateheure|date('Y-m-d') %} 
        
-  
-   
-    <span style="text-transform: capitalize; font-weight: bold; font-family: arial; font-size: 11px;">{{ la_date|format_datetime(pattern: "eeee") }} </span>
-    <span style="text-transform: lowercase;  font-weight: bold; font-family: arial; font-size: 11px;">{{ la_date|format_datetime(pattern: "d MMMM y") }} </span><br>
+   <span style="font-weight: bold; font-family: arial; font-size: 11px;">{{ la_date|format_datetime(pattern: "eeee d MMMM y")|capitalize }} </span><br>
     
     
     {% endif %}
