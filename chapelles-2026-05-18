@@ -1,0 +1,15 @@
+{% set chapelles=[
+
+{id: 14741,name:"Trébeurden Chapelle de Penvern"},
+{id: 11994,name:"Brélévenez"},
+{id: 12001,name:"Ploubezre"},
+{id: 12005,name:"Saint-Yves"},
+{id: 12006,name:"Servel"},
+{id: 12009,name:"Notre Dame des Fontaines"},
+{id: 12010,name:"Eglise Saint-Ezéchiel"},
+{id: 12014,name:"Accueil Saint-Jean"},
+{id: 15917,name:"Chapelle de Saint-Herbot"},
+{id: 12007,name:"Trébeurden"},
+{id: 16034,name:"Résidence Sainte Anne"},
+{id: 19555,name:"Ehpad Min Ran"}
+] %}
