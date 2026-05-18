@@ -1,0 +1,136 @@
+<!doctype html>
+<html  lang="fr">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>doc25157</title>
+    </head>
+     <body>
+     {# Affichage du logo et des coordonnées de la paroisse xx #}
+   
+         
+         
+        {# Affichage du titre demandé par l'utilisateur ou "célébrations " & date d édition de cette liste #}
+		{%set  titrechoisi=''%}
+		
+        {% if  titre!='Fiche de messe' %}
+			{%set  titrechoisi=titre %}
+        {% else %}
+			{%set  titrechoisi='' %}
+                
+                {% for messe in messes %}
+                    {% if loop.first %} {%set  titrechoisi='  du  ' ~ messe.dateHeure|format_datetime('none','none',pattern='EEEE dd MMMM', locale: 'fr') %}{% endif %}
+                    {% if loop.last %} {%set  titrechoisi=titrechoisi~' '~'au  '~ messe.dateHeure|format_datetime('none','none',pattern='EEEE dd MMMM', locale: 'fr')%}{% endif %}
+                {% endfor %}
+                
+            {%set titrechoisi='Planning hebdomadaire des célébrations ' ~ titrechoisi %}
+               
+	            
+        {% endif %}
+		
+		
+		<h3>{{titrechoisi}}</h3>
+         
+         {% set lieux=[] %}
+       {% set lieux2=[] %}
+         {% set lesdates=[] %}
+       {%  set name="" %}
+
+
+
+
+       
+         
+{% set chapelles=[
+
+{id: 14741,name:"Trébeurden Chapelle de Penvern"},
+{id: 11994,name:"Brélévenez"},
+{id: 12001,name:"Ploubezre"},
+{id: 12005,name:"Saint-Yves"},
+{id: 12006,name:"Servel"},
+{id: 12009,name:"Notre Dame des Fontaines"},
+{id: 12010,name:"Eglise Saint-Ezéchiel"},
+{id: 12014,name:"Accueil Saint-Jean"},
+{id: 15917,name:"Chapelle de Saint-Herbot"},
+{id: 12007,name:"Trébeurden"},
+{id: 16034,name:"Résidence Sainte Anne"},
+{id: 19555,name:"Ehpad Min Ran"}
+] %}
+
+         
+{% for messe in messes %} 
+{% if messe.reservationEglise.salle.id not in lieux %} {% set lieux=lieux|merge([messe.reservationEglise.salle.id]) %} {% endif %}
+{% if messe.dateHeure|date('Y/m/d') not in lesdates %} {% set lesdates=lesdates|merge([messe.dateHeure|date('Y/m/d')]) %} {% endif %}
+{% endfor %}
+
+       {#  Objectif: contruire la liste des lieux comportant au mons une messe #"}
+       {#  pour chaque chapelle, retrouver son nom à partir de son ID  #}
+       {#  construire un tableau d'ojets id, name) #}
+{% for messe in messes %} 
+{% for chapelle in chapelles %}
+{% if chapelle.id==messe.reservationEglise.salle.id %}{% set name=chapelle.name %} {%  endif %}
+{% endfor %}
+{% set existing_ids = lieux2|map(lieu => lieu.id) %}
+{% if messe.reservationEglise.salle.id not in lieux2|map(lieu => lieu.id) %} {% set lieux2=lieux2|merge([{'id':messe.reservationEglise.salle.id, 'name':name}]) %} {% endif %}
+{% endfor %}
+
+{#    Lieux2 #}
+      
+{%  for lieu2 in lieux2 %}
+{{lieu2.id }} - {{lieu2.name}}<br>
+{%  endfor %}
+         
+<p>Les messes</p>
+<table>
+{% for messe in messes %}
+       <tr>
+         <td>{{ messe.reservationEglise.id}}</td>
+         <td>{{ messe.dateHeure|date("d/m/y H:i") }}</td>
+         <td>{{ messe.reservationEglise.salle}}</td>
+         <td>{{ messe.reservationEglise.salle.id}}</td>
+         <td>{{ messe.reservationEglise.salle.nom}}</td>
+         <td>{% for cel in messe.celebrants %}{{cel.personne.prenom}}<br>{% endfor %}</td>
+        </tr>
+{%  endfor %}
+</table>
+       
+<p>Le planning</p>      
+<table>
+<tr>
+<td  style="background-color:#f90;font-weight: bold;">PBN</td>
+{% for ladate in lesdates %}
+<td style="background-color:#f90;font-weight: bold;">{{ (ladate~' 00:00:00')|format_datetime(locale='fr', pattern='EEEE') }}<br>
+{{ (ladate~' 00:00:00')|date('d/m')}}</td>
+{% endfor %}
+</tr>
+  
+{% for lieu2 in lieux2 %}
+<tr>
+<td>{{lieu2.id}}<br>{{lieu2.name}}</td>
+{% for ladate in lesdates %}<br>
+<td>
+
+{#  pour chaque lieu, chaque date, on consulte toutes les messes, pour afficher les messes correspondantes #}
+ {% for messe in messes %}
+{%  if messe.reservationEglise.salle.id==lieu2.id    %}
+{%  if messe.dateHeure|date("y/m/d")    ==ladate|date("y/m/d") %}
+{{ messe.dateHeure|date("H:i")}}<br>
+{{ messe.informations }}<br>
+{% for cel in messe.celebrants %}<b>{{cel.personne.prenom}}</b><br>{% endfor %}
+  {%  endif %}
+  {%  endif %}
+{%  endfor %}
+</td>
+{% endfor %}
+</tr>
+{%  endfor %}
+</table>
+       
+<h4 style="margin-top: 2%%;">Planning publié le {{ "now"|date("d/m/Y") }}</h4>
+</body>
+</html>
+
+     
+     
+     
+     
