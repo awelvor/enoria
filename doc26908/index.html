@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title> doc 26908</title>
+  <style>
+ 
+   body {
+ font-family: arial;
+font-size: 16px;
+}
+
+
+  
+  </style>
+</head>
+<body>
+
+  {#  scope  #}
+
+  
+<p>personne</p>
+{% for personne in personnes %}
+<p><a href="https://web.enoria.app/personne/{{ personne.id}}" target=_blank>{{ personne.id}}</a>{{ personne.prenom}} {{ personne.nom }} </p>
+
+<p>foyer</p>
+
+
+
+{% for foyer in personne.membreFoyer %}
+<table>
+<tr>
+<td>foyer</td>
+<td><a href="https://web.enoria.app/foyer/display/{{foyer.id}}" target=_blank>{{foyer.id}}</a></td>
+<td>{{ foyer.nom}} </td>
+<td>{{ foyer.responsable }}</td>
+</tr>
+{%  for membre in foyer.membres %}
+<tr>
+<td>membre</td>
+<td><a href="https://web.enoria.app/personne/{{ membre.id}}" target=_blank>{{ membre.id}}</a></td>
+<td>{{ membre.prenom}}</td>
+<td>{{ membre.nom }} </td>
+</tr>
+{%  endfor  %}
+  
+ 
+  {% for sacrement in personne.sacrements %}
+  <tr>
+  <td>celebrant</td>
+<td><a href="https://web.enoria.app/personne/{{ sacrement.celebrant.id}}" target=_blank>{{ sacrement.celebrant.id}}</a></td>
+ <td> {{sacrement.celebrant.prenom}}</td>
+<td>{{ sacrement.celebrant.nom}}</td>
+</tr>
+  {% for beneficiaire in sacrement.dossierBeneficiaires %}
+<tr>
+<td>beneficiaire</td>
+  <td><a href="https://web.enoria.app/personne/{{ beneficiaire.personne.id }}" target=_blank>{{ beneficiaire.personne.id }}</a></td>
+  <td> {{beneficiaire.personne.prenom}}</td>
+<td>{{ beneficiaire.personne.nom}}</td>
+  {%  endfor %}
+</tr>
+ 
+  
+  <tr>
+<td>parrain</td>
+ 
+  <td></td>
+<td></td>
+<td> 
+{% for sacrement in personne.sacrements %}
+{% for beneficiaire in sacrement.dossierBeneficiaires %}
+{{ beneficiaire.dossierPersonnel.parrain }}
+{% endfor %}
+{% endfor %}
+</td>
+</tr>
+  <tr>
+<td>marraine</td>
+<td></td>
+<td>{{ beneficiaire.personne.nom}}</td>
+<td>
+{% for sacrement in personne.sacrements %}
+{% for beneficiaire in sacrement.dossierBeneficiaires %}
+{{ beneficiaire.dossierPersonnel.marraine }}
+{% endfor %}
+{% endfor %}
+</td>
+</tr>
+
+
+  
+{%  endfor %}
+</table>
+
+{{ foyer.adressePostale.numeroRue }} {{ foyer.adressePostale.rue }} {{ foyer.adressePostale.cp }} {{ foyer.adressePostale.ville }}<br>
+
+{%  endfor  %}
+
+<p>sacrement</p>
+{% for sacrement in personne.sacrements %}
+<p><a href="https://web.enoria.app/sacrement/display/{{sacrement.id}}" target=_blank>{{sacrement.id}}</a> {{ sacrement.type}} {{ sacrement.datePrevue|date("d/m/Y") }}</p>
+{{ sacrement.celebrant.id }}{{ sacrement.celebrant.titre }} {{ sacrement.celebrant.prenom }} {{ sacrement.celebrant.nom }}<br>
+{% endfor %}
+
+  -----------------------------------------------------------
+{% endfor %}
+
+
+  	
+</body>
+</html>
