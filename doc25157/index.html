@@ -1,4 +1,43 @@
-<!doctype html>
+<style>
+
+html {
+    font-family: Helvetica, Verdana, Georgia, Arial, serif;
+}
+
+img {
+    float: left;
+    margin-right: 10px;
+    width: 75px;
+    height: 75px;
+}
+
+table {
+    font-family: Helvetica, Verdana, Georgia, Arial, serif;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-collapse: collapse;
+    page-break-after: auto ;
+}
+tr,th,td 
+{
+    font-size:11px;
+    padding: 1px;
+    border: 1px solid black;
+    border-collapse: collapse;
+   
+    text-align: center; 
+    vertical-align : middle;
+   
+}
+
+th 
+{
+    background-color: rgb(211,211,211);
+    line-height: 1.0em;
+
+}
+</style><!doctype html>
 <html  lang="fr">
     <head>
     <meta charset="utf-8">
@@ -44,17 +83,30 @@
 {% set chapelles=[
 
 {id: 14741,name:"Trébeurden Chapelle de Penvern"},
-{id: 11994,name:"Brélévenez"},
-{id: 12001,name:"Ploubezre"},
-{id: 12005,name:"Saint-Yves"},
-{id: 12006,name:"Servel"},
-{id: 12009,name:"Notre Dame des Fontaines"},
-{id: 12010,name:"Eglise Saint-Ezéchiel"},
-{id: 12014,name:"Accueil Saint-Jean"},
-{id: 15917,name:"Chapelle de Saint-Herbot"},
-{id: 12007,name:"Trébeurden"},
-{id: 16034,name:"Résidence Sainte Anne"},
-{id: 19555,name:"Ehpad Min Ran"}
+{id: 14744, name:"Chapelle de Saint-Uzec"},
+{id: 11994, name:"Brélévenez"},
+{id: 12001, name:"Ploubezre"},
+{id: 12003, name:"Rospez Saint-Pierre et Saint-Paul"},
+{id: 12004, name:"Saint-Jean du Baly"},
+{id: 12005, name:"Saint-Yves"},
+{id: 12006, name:"Servel"},
+{id: 12009, name:"Notre Dame des Fontaines"},
+{id: 12010, name:"Eglise Saint-Ezéchiel"},
+{id: 12014, name:"Accueil Saint-Jean"},
+{id: 15917, name:"Chapelle de Saint-Herbot"},
+{id: 12007, name:"Trébeurden"},
+{id: 16034, name:"Résidence Sainte Anne"},
+{id: 19555, name:"Ehpad Min Ran"},
+{id: 14750, name:"Ehpad Kergomar"},
+{id: 17751, name:"Ehpad du Gavel"},
+{id: 12002, name:"Ploulec'h Saint-Pierre et Saint-Paul"},
+{id: 11997, name:"Lanmérin Saint-Mérin"},
+{id: 11999, name:"Pleumeur-Bodou Saint-Pierre, Bourg"},
+{id: 20612, name:"Tréguier Cathédrale Saint-Tugdual"},
+{id: 11998, name:"Lannion Saint-Ivy - Loguivy-lès-Lannion"},
+{id: 16026, name:"Lannion Chapelle Saint-Thurien -Servel"},
+{id: 11995, name:"Lannion Sainte Marguerite -Buhulien"},
+{id: 11998, name:"Lannion Saint-Ivy - Loguivy-lès-Lannion"}
 ] %}
 
          
@@ -107,7 +159,7 @@
 {% for lieu2 in lieux2 %}
 <tr>
 <td>{{lieu2.id}}<br>{{lieu2.name}}</td>
-{% for ladate in lesdates %}<br>
+{% for ladate in lesdates %}
 <td>
 
 {#  pour chaque lieu, chaque date, on consulte toutes les messes, pour afficher les messes correspondantes #}
@@ -115,7 +167,6 @@
 {%  if messe.reservationEglise.salle.id==lieu2.id    %}
 {%  if messe.dateHeure|date("y/m/d")    ==ladate|date("y/m/d") %}
 {{ messe.dateHeure|date("H:i")}}<br>
-{{ messe.informations }}<br>
 {% for cel in messe.celebrants %}<b>{{cel.personne.prenom}}</b><br>{% endfor %}
   {%  endif %}
   {%  endif %}
@@ -134,3 +185,7 @@
      
      
      
+
+
+
+
