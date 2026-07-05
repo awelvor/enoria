@@ -1,0 +1,175 @@
+<html>
+{# **************************************************************************
+Version 1.2 - 20/02/2026 - Baptême - Attestation de célébration
+Ce modèle est conçu pour être publié en format portrait.
+Attention: la valeur de la fonction du responsable ecclésiastique correspond à la valeur du champ "Profession" de la fiche personnelle.
+
+Liste des modifications:
+- Correction d'un code erroné concernant l'affichage du lieu de célébration. (v 1.2)
+- Ajout de l'horaire de la célébration. (v 1.1)
+- Ajustement de la taille du logo et des marges. (v 1.1)
+- Création du modèle. (v 1.0)
+
+Si vous constatez un dysfonctionnement à partir de ce modèle, 
+merci d'adresser votre remarque à perecedric@association-enoria.org
+***************************************************************************** #}
+<body>
+
+{% set ListeBaptises = [] %}
+{% for personne in personnes %}
+	{% for sacrement in personne.sacrements %}
+		{% if sacrement.type == 'bapteme' %}
+			{% if personne.IsBapteme =="T" %}
+				{% for foyer in personne.membreFoyer %}
+					{% if loop.first %}
+						{% set ListeBaptises = ListeBaptises|merge([foyer]) %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+{% for personne in personnes %}
+	{% for sacrement in personne.sacrements %}
+		{% if sacrement.type == 'bapteme' %}
+			{% if sacrement.dossier.lieuCelebrationExterieure =="" %}
+				{% for foyer in personne.membreFoyer %}
+
+
+<main backtop="0mm" backbottom="5mm" backleft="12mm" backright="12mm"  >
+    <table width="480" border="0" class="tableau">
+        <tr>
+            <td height="200" align="left">
+				{% if loop.first %}
+					{% if sacrement.entiteLiee.logo %}
+						<img src="{{ (sacrement.entiteLiee.logo|default)|imagine_filter('logo') }}" width="150"/>
+					{% elseif app.user.entiteActive.logo %}
+						<img src="{{ (app.user.entiteActive.logo|default)|imagine_filter('logo') }}"  width="150"/>
+					{% endif %}
+				{% endif %}<br/><br/>
+				
+				{% if sacrement.entiteLiee.nom %}
+					{% if "Paroisse" in sacrement.entiteLiee.nom %}
+						<b>{{ sacrement.entiteLiee.nom }}</b><br/>
+					{% else %}
+						<b>Paroisse {{ sacrement.entiteLiee.nom }}</b><br/>
+					{% endif %}
+					{% if sacrement.entiteLiee.adresse %}
+						<br/>{{ sacrement.entiteLiee.adresse.numeroRue }} {{ sacrement.entiteLiee.adresse.rue }}<br/>{{ sacrement.entiteLiee.adresse.cp }} {{ sacrement.entiteLiee.adresse.ville }}<br/>
+					{% endif %}
+				{% elseif app.user.entiteActive.nom %}
+					{% if "Paroisse" in app.user.entiteActive.nom %}
+						<b>{{ app.user.entiteActive.nom }}</b><br/>
+					{% else %}
+						<b>Paroisse {{ app.user.entiteActive.nom }}</b><br/>
+					{% endif %}
+					{% if app.user.entiteActive.adresse %}
+						{{ app.user.entiteActive.adresse.numeroRue }} {{ app.user.entiteActive.adresse.rue }}<br/>{{ app.user.entiteActive.adresse.cp }} {{ app.user.entiteActive.adresse.ville }}<br/>
+					{% endif %}
+				{% endif %}
+				
+				
+			</td>
+            <td width="200">
+                <p class="textenormal-droite" align="right">
+				{{ app.user.entiteActive.adresse.ville }},<br/>
+				le {{"now"|format_datetime('long','none',locale='fr') }}
+				</p><br/>
+            </td>
+        </tr>
+    </table>
+	
+	<p> </p>
+	<p class="titre-centre"><b>Attestation de célébration de baptême</b></p><p> </p><p> </p>
+
+	<p class="textenormal">Je soussigné, <br/><br/>{{ app.user.entiteActive.responsableEcclesiastique }}, {{ app.user.entiteActive.responsableEcclesiastique.ClasseDetails }} de
+	{% if sacrement.entiteLiee.nom %}
+		{% if "Paroisse" in sacrement.entiteLiee.nom %}
+			la {{ sacrement.entiteLiee.nom }}
+		{% elseif "paroissial" %}
+			l'{{ sacrement.entiteLiee.nom }}
+		{% else %}
+			la Paroisse {{ sacrement.entiteLiee.nom }}
+		{% endif %}<br/>
+	{% elseif app.user.entiteActive.nom %}
+		{% if "Paroisse" in app.user.entiteActive.nom %}
+			la {{ app.user.entiteActive.nom }}
+		{% else %}
+			la Paroisse {{ app.user.entiteActive.nom }}
+		{% endif %}<br/>
+	{% endif %}
+	<br/>
+	certifie que <b>{{ personne.prenom }}</b>, {% if personne.sexe == "M" %}fils{% else %}fille{% endif %} de
+	{% if foyer.pere and foyer.mere %}
+		{% if foyer.pere.nom == foyer.mere.nom %}
+			{{ foyer.pere.prenom }} et {{ foyer.mere.prenom }} {% if foyer.pere.particuleNom %}{{ foyer.pere.particuleNom }} {% endif %}{{ foyer.pere.nom }},
+		{% else %}
+			{{ foyer.pere.prenom }} {% if foyer.pere.particuleNom %}{{ foyer.pere.particuleNom }} {% endif %}{{ foyer.pere.nom }}
+			et {{ foyer.mere.prenom }} {% if foyer.mere.particuleNom %}{{ foyer.mere.particuleNom }} {% endif %}{{ foyer.mere.nom }},
+		{% endif %}
+	{% elseif foyer.pere and not foyer.mere %}
+		{% if foyer.adressePostale %}
+			{{ foyer.pere.nomcomplet }},
+		{% endif %}
+	{% elseif foyer.mere and not foyer.pere %}
+		{% if foyer.adressePostale %}
+			{{ foyer.mere.nomcomplet }},
+		{% endif %}
+	{% endif %}
+	<br/>sera baptisé{% if personne.sexe == "F" %}e{% endif %} le
+		<b>
+		{% for sacrement in personne.sacrements %}
+			{% if sacrement.type == 'bapteme' %}
+				{{ sacrement.datePrevue|format_datetime('long','none',locale='fr') }}, à {{ sacrement.datePrevue|format_datetime('none','none',pattern='HH:mm') }},
+				{% if sacrement.lieuReservation %}
+					en l'{{ sacrement.lieuReservation.salle.nom }} de 
+					{% if sacrement.lieuReservation.salle.adresse.ville %}{{ sacrement.lieuReservation.salle.adresse.ville }} 
+					{% else %}{{ sacrement.lieuReservation.salle.lieu }}.
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+		</b>
+
+	</p>
+	<p> </p><p> </p>
+	<p class="textenormal-droite">Pour faire valoir ce que de droit,</p>
+	<p> </p>
+
+	<table width="100%" border="0">
+		<tr>
+			<td width="50%" align="center">
+				{% set celebration = 0 %}
+				{% for sacrement in personne.sacrements %}
+					{% if sacrement.type == 'bapteme' %}
+						{% if sacrement.entiteLiee.sceau|default != null %}
+							<img src="{{ (sacrement.entiteLiee.sceau)|imagine_filter('sm_thumb') }}" height="120"/>
+							{% set celebration = 1 %}
+						{% elseif app.user.entiteActive.sceau|default != null %}
+							<img src="{{ (app.user.entiteActive.sceau)|imagine_filter('sm_thumb') }}" height="120"/>
+							{% set celebration = 1 %}
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+				{% if celebration == 0 and app.user.entiteActive.sceau|default != null %}
+					<img src="{{ (app.user.entiteActive.sceau)|imagine_filter('sm_thumb') }}" height="120"/>
+				{% endif %}
+			</td>
+			<td width="50%" align="center"></td>
+		</tr>
+	</table>
+	
+	<p class="textenormal-centre" align="center">{{ app.user.entiteActive.responsableEcclesiastique }}
+	<br/>{{ app.user.entiteActive.responsableEcclesiastique.ClasseDetails }}</p>
+	<p> </p>
+
+</main>{% if not loop.last %}<div class="page_break"></div>{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+</body>
+</html>
