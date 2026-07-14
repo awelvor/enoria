@@ -1,0 +1,631 @@
+<head>
+<style>
+
+	html, body {
+		height: 100%;
+	}
+
+	header {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		padding-bottom: 5px;
+		height: 15px;
+		text-align: right;
+		font-size: 0.7em;
+	}
+
+	body {
+		font-family: Arial, Helvetica, sans-serif !important;
+	}
+	.titre {
+		font-weight: bold;
+		margin-top: 1em;
+        margin-left: 100px;
+		font-size: 21px;
+		padding: 0px;
+		text-align: left;
+		text-transform: uppercase;
+	}
+	.entitemajuscule {
+		font-weight: bold;
+		margin-top: 1.3em;
+		font-size: 16px;
+		text-align: left;
+		text-transform: uppercase;
+	}
+	.entiteminuscule {
+		font-weight: bold;
+		margin-top: 1em;
+		font-size: 16px;
+		text-align: left;
+	}
+	.textemajuscule {
+		font-size: 12px;
+		text-transform: uppercase;
+	}
+	.texteform {
+		text-align: left;
+		font-size: 12px;
+		line-height: 8px
+	}
+	.textenormal {
+		font-size: 12px;
+		text-align: left;
+	}
+	.textenormal-margehaut {
+		font-size: 12px;
+		text-align: left;
+		margin-top: 0.5em;
+	}
+	.notes {
+		font-size: 8px;
+	}
+	.notes-10px {
+		font-size: 10px;
+	}
+
+	table.tableau {
+		font-family:Arial, Helvetica, sans-serif;
+		padding:5px;
+	}
+	table.tableau small {
+		padding:5px;
+		font-size:10px;
+		text-align: center;
+	}
+	table.tableau form {
+		padding:5px;
+		font-size:12px;
+		text-align: left;
+	}
+	
+	tableau.bordures {
+	border-spacing:3px;
+	}
+	.bordure1px {
+		border:1px solid; 
+	}
+	.bordure2px {
+		border:2px solid; 
+	}
+	.bordure0px {
+		border-style:none;
+	}  
+	.bordure-acte {
+		border-left-style:solid;
+		border-right-style:solid;
+		border-width:1px;
+	}
+	.bordure-centre {
+		border-left-style:solid;
+		border-width:2px;
+	}
+
+	div{
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	.page_break { page-break-before: always; }
+	@page {
+		margin-top: 1cm;
+		margin-bottom: 0cm;
+		margin-left: 2cm;
+		margin-right: 1.5cm; }.
+
+	footer {
+		position: absolute;
+		bottom: 0.7cm;
+		width: 100%;
+		padding-top: 10px;
+		height: 10px;
+		text-align: center;
+		font-size: 0.7em;
+	}
+</style>
+</head>
+
+
+
+
+
+<html>
+{# *********************************************************************************************************************************************************************************************
+Version 3.3 - 10/03/2023 - Baptême - Actes de baptême
+
+		Ce modèle permet d'éditer toutes les actes de baptêmes d'une célébration. Pour que le remplissage automatique des champs soit optimal, plusieurs conditions sont requises:
+		1. Prénom et nom du ministre du baptême : la valeur doit être renseignée dans la célébration. 
+		   S'il s'agit d'un célébrant extérieur, il faut avoir rempli le champ dédié.
+		2. La fonction du célébrant doit être renseignée dans le champ "Profession" de la fiche personnelle du célébrant. 
+		   S'il s'agit d'un célébrant extérieur, la valeur devra être remplie à la main sur l'acte.
+		3. Prénom et nom du père : la fiche personnelle du père et la relation de filiation doivent avoir été créées dans Enoria.
+		4. Prénom de la mère : la fiche personnelle de la mère et la relation de filiation doivent avoir été créées dans Enoria.
+		5. Nom de la mère : par défaut, c'est le nom de jeune fille de la mère qui est recherché. Cette valeur doit avoir été entrée dans le champ dédié de la fiche personnelle de la mère. 
+		   Si la valeur n'existe pas, c'est le nom de la mère qui est sélectionné.
+		6. Lieu du domicile : le cas des enfants de parents séparés est pris en compte par le modèle. 
+		   Si un enfant a plusieurs foyers, c'est le premier des deux (son foyer principal) qui est pris en compte pour la domiciliation.
+		   
+Liste des modifications:
+- Correction du format d'affichage de l'année de baptême. (v 3.3)
+- Augmentation de la marge de gauche à 2cm. (v 3.2)
+- Correction du format d'affichage des dates. (v 3.1)
+- Adaptation de l'affichage de la fonction du célébrant. (v 3.0)
+- Prise en compte de la ville de l'adresse de l'église au lieu du nom du lieu. (v 2.9)
+- Prise en compte de l'affectation de la célébration à une entité liée. (v 2.8)
+- Ajustement de l'affichage suite à la mise à jour de PHP 8.1 et Symphony 6. (v 2.7)
+- Ajout de la fonction du célébrant lorsque celui-ci est un célébrant de la paroisse. (v 2.6)
+- Ajout de l'affichage des représentants des parrain ou marraine. (v 2.5)
+- Correction d'affichage complet de l'adresse des parents pour les pays étrangers. (v 2.4)
+- Affichage complet de l'adresse des parents. (v 2.3)
+- Adaptation de l'affichage de la mention "parrain" ou "marraine" dans la signature quand il n'y a pas de parrain ou marraine. (v 2.3)
+- Intégration du nouveau champ "Autres prénoms". Cette version conserve la possibilité d'utiliser un champ supplémentaire. (v 2.2)
+- Adaptation du code pour l'affichage des autres prénoms, suite à la mise à jour concernant les champs supplémentaires. (v 2.1)
+- Mise en valeur des éléments paramétrables (v 2.1)
+- Remplacement d'un filtre de format date. (v 2.0)
+
+Si vous constatez un dysfonctionnement à partir de ce modèle, 
+merci d'adresser votre remarque à perecedric@association-enoria.org
+************************************************************************************************************************************************************************************************* #}
+	<body>
+{# *************************************************************************************************************** 
+   Eléments paramétrables : paramétrez ci-dessous le nom du champ supplémentaire où sont entrés les autres prénoms 
+  (normalement, c'est un champ supplémentaire attaché à la fiche de la personne). 
+****************************************************************************************************************** #}
+	{% set autresprenomsold = 'Autres prénoms' %}
+{# *************************************** fin des éléments paramétrables ***************************************** #}
+	
+        <main>
+        
+	{% for personne in personnes %}
+		{% for sacrement in personne.sacrements %}
+			{% if sacrement.type == 'bapteme' %}	
+				<table width="100%" height="120px" class="bordure0px">
+					
+                    <tr>
+                       <td width="15%"rowspan="2"  align="left"><img style="width: 120px; height: 80px;" alt="" src="{{ (app.user.entiteActive.logo)|imagine_filter('logo') }}" height="70px"/></td>
+                        <td ><span class="titre">     Acte de Baptême</span></td>
+                        
+                    </tr>
+                </table>
+                <table width="100%"  class="bordure0px">
+                    <tr>                        
+                        <td   align="right"><span class="entitemajuscule">{{ entite.parent }}</span></td>
+                    </tr>
+                    <tr>
+						    <td    align="right"><span class="entitemajuscule">Eglise : </span><span class="textenormal"><strong>
+							{% if sacrement.lieuReservation %}
+								{% if sacrement.lieuReservation.salle.adresse.ville %}{{ sacrement.lieuReservation.salle.adresse.ville }} 
+								{% else %}{{ sacrement.lieuReservation.salle.lieu }} 
+								{% endif %}
+								- {{ sacrement.lieuReservation.salle.nom }}{% else %}......................................{% endif %}</strong></span></td>
+					</tr>
+                </table>
+				
+				<table width="100%" height="130px" class="bordure0px">
+					<tr>
+                        <td  align="left"><span class="entitemajuscule">année 
+						{{ sacrement.datePrevue|format_datetime('none','none',pattern='y') }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+						<td align="left" width="200px"><span class="entitemajuscule">
+							{% if sacrement.entiteLiee.nom %}
+								{% if "Paroisse" in sacrement.entiteLiee.nom %}
+									{{ sacrement.entiteLiee.nom }}
+								{% else %}
+									Paroisse {{ sacrement.entiteLiee.nom }}
+								{% endif %}
+							{% elseif app.user.entiteActive.nom %}
+								{% if "Paroisse" in app.user.entiteActive.nom %}
+									{{ app.user.entiteActive.nom }}
+								{% else %}
+									Paroisse {{ app.user.entiteActive.nom }}
+								{% endif %}
+							{% else %}.......................................
+							{% endif %}</span>
+						</td>
+					</tr>
+                    <tr>
+                    <td rowspan="2" width="21%" valign="top" align="left"><span class="entitemajuscule">Baptême n° 
+							{% set numacte = 0 %}
+							{% for beneficiaire in sacrement.dossierBeneficiaires %}
+								{% if personne.id == beneficiaire.personne.id %}
+								{% set personne1 = beneficiaire %}
+									{% if personne1.dossierPersonnel.numActe %}
+										<strong>{{ personne1.dossierPersonnel.numActe }}</strong>
+										{% set numacte = 1 %}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+							</span>
+								{% if numacte == 0 %}
+									<span class="notes"> ...............</span>
+								{% endif %}
+						</td>
+                    </tr>
+					<tr>
+						<td align="left" width="24%" valign="top">
+							{% if numacte == 0 %}
+								<div class="notes">Numéroter au moment </div><div class="notes">où on est sûr de l'ordre chronologique</div>
+							{% endif %}
+						</td>
+						<td></td>
+						<td width="4%"></td>
+						
+						<td width="4%"></td>
+					</tr>
+				</table>
+				<br/>
+				
+				<table width="100%" height="650px" cellpadding="5px" class="bordure-acte">
+					<tr>
+						<td width="33%" valign="top">
+								<span class="textenormal">Prénom usuel</span><br/>{% if personne.prenom %}<div class="textenormal-margehaut">  <strong>{{ personne.prenom }}</strong></div>{% else %}<div class="notes"> .....................................</div>{% endif %}<br/>
+								<div><span class="textemajuscule">Nom</span></div><br/>
+									{% if personne.sexe == 'M' %}<div class="textenormal">  <strong>{% if personne.particuleNom %}{{ personne.particuleNom }} {% endif %}{{ personne.nom }}</strong></div>
+									{% elseif personne.sexe == 'F' %}<div class="textenormal">  <strong>{% if personne.nomJeuneFille %}{{ personne.nomJeuneFille }}{% else %}{% if personne.particuleNom %}{{ personne.particuleNom }} {% endif %}{{ personne.nom }}{% endif %}</strong></div>
+									{% else %}<div class="notes"> .........................................................................................................................................</div>{% endif %}
+								<div class="notes">________________________________________________</div>
+								<p><span class="textenormal"><strong>Confirmé{% if personne.sexe == 'F' %}e{% endif %} le </strong></span><span class="notes">{% if personne.sexe == 'M' %}....{% endif %}.........................................................</span><br/>
+								<span class="textenormal"><strong>en l'église de</strong></span><br/><span class="notes">..................................................................................................</span><br/>
+								<span class="textenormal"><strong>paroisse de</strong></span><br/><span class="notes">..................................................................................................</span><br/>
+								<span class="textenormal"><strong>Diocèse</strong></span><span class="notes"> ........................................................................</span></p>
+								<div class="notes">________________________________________________</div>
+								<p><span class="textenormal"><strong>A épousé</strong></span><br/><br/><span class="notes">..................................................................................................<br/><br/>..................................................................................................</span><br/>
+								<span class="textenormal"><strong>le</strong></span><span class="notes"> ...........................................................................................</span><br/>
+								<span class="textenormal"><strong>en l'église de</strong></span><br/><span class="notes"> .................................................................................................</span><br/>
+								<span class="textenormal"><strong>paroisse de</strong></span><br/><span class="notes"> .................................................................................................</span><br/>
+								<span class="textenormal"><strong>Diocèse</strong></span><span class="notes"> ........................................................................</span></p>
+								<div class="notes">_________________________________________________</div>
+								<br/><div class="textenormal"><strong>Autres annotations canoniques</strong></div>
+								<div class="notes"><br/>.................................................................................................<br/><br/>.................................................................................................<br/><br/>.................................................................................................
+								<br/><br/>.................................................................................................</div>
+								<div class="notes">_________________________________________________</div>
+								<br/><div class="textenormal"><strong>Annotations civiles</strong></div><br/>
+								<div class="notes">.................................................................................................<br/><br/>.................................................................................................<br/><br/>.................................................................................................
+								<br/><br/>.................................................................................................
+								<br/><br/>.................................................................................................</div>
+						</td>
+
+{# ***********************************
+Ici commence la colonne principale.
+************************************** #}					
+						<td width="66%" class="bordure-centre" valign="top" cellpadding="3px">
+								<span class="textenormal">Le {% if sacrement.datePrevue %}{{ sacrement.datePrevue|format_datetime('long','none',locale='fr') }}{% else %}<span class="notes">...................................................................</span><div class="notes" align="center">(jour en chiffres, mois en lettres, année sur 4 chiffres)</div>{% endif %}
+								<br/><br/>
+								<span class="textenormal">A été baptisé par moi 
+{# *********************************************************************************************************************************************************************************************
+Paramétrage du célébrant.
+Pour afficher la fonction du célébrant: remplir le champ "Profession" dans sa fiche personnelle.
+************************************************************************************************************************************************************************************************* #}
+								{% if sacrement.dossier.celebrantExterieur %}  <strong>{{ sacrement.dossier.celebrantExterieur }}</strong>
+								{% elseif sacrement.celebrant.nom != 'EXTÉRIEUR' or sacrement.celebrant.nom != '' %}  <strong>{{ sacrement.celebrant.prenom }} {% if sacrement.celebrant.particuleNom %}{{ sacrement.celebrant.particuleNom }} {% endif %}{{ sacrement.celebrant.nom }}</strong>
+								{% else %}<span class="notes">.................................................................................</span><div class="notes" align="center">Prénom et Nom du ministre du baptême</div>
+								{% endif %}<br/>
+								<span class="textenormal">fonction </span>
+									{% if "uré" in sacrement.celebrant.ClasseDetails
+										or "dministrateur" in sacrement.celebrant.ClasseDetails 
+										or "rêtre" in sacrement.celebrant.ClasseDetails 
+										or "icaire" in sacrement.celebrant.ClasseDetails 
+										or "iacre" in sacrement.celebrant.ClasseDetails %}<strong> {{ sacrement.celebrant.ClasseDetails }}</strong>
+									{% else %}<span class="notes">................................................................</span>
+									{% endif %}<br/>
+								<p align="right"><span class="notes-10px">soussigné                                                </span></p>
+								<p><span class="textenormal">Prénoms 
+									{% if personne.prenom %}<span class="textenormal"><strong>  {{ personne.prenom }}</strong></span>{% else %}<span class="notes">.............................</span>{% endif %}
+
+								{% if personne.autresPrenoms != "" %}
+									<span class="textenormal"><strong>, {{ personne.autresPrenoms }}</strong></span>
+								{% else %}
+									{% for valChamp in personne.champSupplementaireValues|filter(c => c.champSupplementaire.nom == autresprenomsold and c.value !='') %}
+										<span class="textenormal"><strong>, {{ valChamp.value }}</strong></span>
+									{% endfor %}
+								{% endif %}	
+
+								<br/>
+								</p>
+								<p><span class="textemajuscule">Nom {% if personne.nom %}        <strong>{{ personne.nomDeNaissance }}</span></strong>{% else %}.............................</span>{% endif %}<br/>
+								</p>
+								
+								<p><span class="textenormal">né{% if personne.sexe == 'F' %}e{% endif %} le {% if personne.dateNaissance %} <strong>{{ personne.dateNaissance|format_datetime('long','none',locale='fr') }}</strong>{% else %}.............................</span>{% endif %}<br/>
+								</p>
+								
+								<p><span class="textenormal">lieu de naissance</span>
+								{% if personne.lieuNaissance %}<span class="textenormal">  <strong>{{ personne.lieuNaissance }}</strong></span>
+								{% else %}<span class="textenormal">..............................................................................</span>
+								{% endif %}
+								</p>
+							
+								<p><span class="textenormal">{% if personne.sexe == 'M' %}fils{% else %}fille{% endif %} de   
+{# *********************************************************************************************************************************************************************************************
+Récupération des prénom et nom du Père dans le cas d'un enfant vivant dans les deux foyers de ses parents séparés.
+************************************************************************************************************************************************************************************************* #}
+									{% if personne.membreFoyer|length > 0 %}
+									{% set comptefoyers = 0 %}
+									{% set personnefoyerdouble = [] %}
+										{% for foyer in personne.membreFoyer %}
+										{% set comptefoyers = comptefoyers + 1 %}
+											{% if comptefoyers == 2 %}
+												{% set foyernombre = 2 %}
+													{% if personne.id not in personnefoyerdouble %}
+														{% set personnefoyerdouble = personnefoyerdouble|merge([personne.id]) %}
+													{% endif %}
+														{% for foyer in personne.membreFoyer %}
+															{% if personne.id in personnefoyerdouble %}
+																{% if foyer.pere %}
+																	<span class="textenormal"><strong>{{ foyer.pere.prenom }} {% if foyer.pere.particuleNom %}{{ foyer.pere.particuleNom }} {% endif %}{{ foyer.pere.nom }}</strong></span><br/>
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+											{% endif %}
+										{% endfor %}
+{# *********************************************************************************************************************************************************************************************
+Récupération des prénom et nom du Père dans le cas d'un enfant vivant dans un seul foyer (de ses deux parents ou de l'un des deux seulement).
+************************************************************************************************************************************************************************************************* #}
+											{% set comptefoyers = 0 %}
+											{% set perenom = 0 %}
+										{% for foyer in personne.membreFoyer %}
+											{% set comptefoyers = comptefoyers + 1 %}
+											{% if comptefoyers == 1 %}
+												{% if personne.id not in personnefoyerdouble %}
+													{% set foyernombre = 1 %}
+														{% for foyer in personne.membreFoyer %}
+															{% if personne.id not in personnefoyerdouble %}
+																{% for parente in personne.parente2 %}
+																{% set pere = parente.personne1 %}
+																	{% if pere.sexe == 'M' %}
+																	{% set idpere = pere.id %}
+																		{% if pere.profilAffichage == 'A' %}
+																			{% if parente.type == 'P' %}
+																				<span class="textenormal"><strong>{{ pere.prenom }} {% if pere.particuleNom %}{{ pere.particuleNom }} {% endif %}{{ pere.nom }}</strong></span><br/></p>
+																				{% set perenom = 1 %}
+																			{% endif %}
+																		{% endif %}
+																	{% endif %}
+																{% endfor %}
+															{% endif %}
+														{% endfor %}
+												{% endif %}		
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								
+									{% if perenom == 0 %}
+										<span class="notes">Prénom du père (et Nom, s'il est différent de celui de l'enfant)</span></p>
+									{% endif %}
+								<p><span class="textenormal">et de     
+
+{# *********************************************************************************************************************************************************************************************
+Récupération des prénom et nom de jeune fille (le cas échéant) dans le cas d'un enfant vivant dans les deux foyers de ses parents séparés.
+************************************************************************************************************************************************************************************************* #}
+									{% if personne.membreFoyer|length > 0 %}
+									{% set comptefoyers = 0 %}
+									{% set personnefoyerdouble = [] %}
+										{% for foyer in personne.membreFoyer %}
+										{% set comptefoyers = comptefoyers + 1 %}
+											{% if comptefoyers == 2 %}
+												{% set foyernombre = 2 %}
+													{% if personne.id not in personnefoyerdouble %}
+														{% set personnefoyerdouble = personnefoyerdouble|merge([personne.id]) %}
+													{% endif %}
+														{% for foyer in personne.membreFoyer %}
+															{% if personne.id in personnefoyerdouble %}
+																{% if foyer.mere %}
+																	<span class="textenormal"><strong>{{ foyer.mere.prenom }} 
+																	{% if foyer.mere.nomJeuneFille %}
+																		{{ foyer.mere.nomJeuneFille }}
+																	{% else %}
+																		{% if foyer.mere.particuleNom %}{{ foyer.mere.particuleNom }} {% endif %}{{ foyer.mere.nom }}
+																	{% endif %}</strong>
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+											{% endif %}
+										{% endfor %}
+{# *********************************************************************************************************************************************************************************************
+Récupération des prénom et nom de jeune fille (le cas échéant) de la Mère dans le cas d'un enfant vivant dans un seul foyer (de ses deux parents ou de l'un des deux seulement).
+************************************************************************************************************************************************************************************************* #}
+											{% set comptefoyers = 0 %}
+											{% set merenom = 0 %}
+										{% for foyer in personne.membreFoyer %}
+											{% set comptefoyers = comptefoyers + 1 %}
+											{% if comptefoyers == 1 %}
+												{% if personne.id not in personnefoyerdouble %}
+													{% set foyernombre = 1 %}
+														{% for foyer in personne.membreFoyer %}
+															{% if personne.id not in personnefoyerdouble %}
+																{% if foyer.mere %}
+																	{% for parente in personne.parente2 %}
+																	{% set mere = parente.personne1 %}
+																		{% if mere.sexe == 'F' %}
+																		{% set idmere = mere.id %}
+																			{% if mere.profilAffichage == 'A' %}
+																				{% if parente.type == 'M' %}
+																					<span class="textenormal"><strong>{{ mere.prenom }} 
+																					{% if mere.nomJeuneFille %}
+																						{{ mere.nomJeuneFille }}
+																					{% else %}
+																						{% if mere.particuleNom %}{{ mere.particuleNom }} {% endif %}{{ mere.nom }}
+																					{% endif %}
+																					</strong></span><br/></p>
+																					{% set merenom = 1 %}
+																				{% endif %}
+																			{% endif %}
+																		{% endif %}
+																	{% endfor %}
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+												{% endif %}		
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% if merenom == 0 %}
+									<span class="notes">Prénom et Nom de jeune fille de la mère (en majuscule)</span></p>
+								{% endif %}
+				
+								<p><span class="textenormal">domiciliés 
+
+{# *********************************************************************************************************************************************************************************************
+Récupération du domicile des parents / ou, dans le cas de parents séparés, du domicile principal (le premier entré dans Enoria).
+************************************************************************************************************************************************************************************************* #}
+								{% if personne.membreFoyer|length > 0 %}
+									{% set comptefoyers = 0 %}
+									{% set personnefoyerdouble = [] %}
+										{% for foyer in personne.membreFoyer %}
+										{% set comptefoyers = comptefoyers + 1 %}
+											{% if comptefoyers == 2 %}
+												{% set foyernombre = 2 %}
+													{% if personne.id not in personnefoyerdouble %}
+														{% set personnefoyerdouble = personnefoyerdouble|merge([personne.id]) %}
+													{% endif %}
+														{% for foyer in personne.membreFoyer %}
+															{% if personne.id in personnefoyerdouble %}
+																{% if loop.first %}
+																	{% if foyer.adressePostale.ville %}
+																		<span class="textenormal"><strong>{{ foyer.adressePostale.numeroRue }} {{ foyer.adressePostale.rue }}<br/>                 {{ foyer.adressePostale.cp }} {{ foyer.adressePostale.ville }}
+																		{% if foyer.adressePostale.pays != app.user.entiteActive.adresse.pays and foyer.adressePostale.pays !='' %}
+																			 ({{ foyer.adressePostale.pays }})
+																		{% endif %}
+																		</strong></span>
+																	{% else %} <span class="textenormal">...........................................................................................</span>
+																	{% endif %}
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+											{% endif %}
+										{% endfor %}
+											{% set comptefoyers = 0 %}
+										{% for foyer in personne.membreFoyer %}
+											{% set comptefoyers = comptefoyers + 1 %}
+											{% if comptefoyers == 1 %}
+												{% if personne.id not in personnefoyerdouble %}
+													{% set foyernombre = 1 %}
+														{% for foyer in personne.membreFoyer %}
+															{% if personne.id not in personnefoyerdouble %}
+																{% if foyer.adressePostale %}
+																	<span class="textenormal"><strong>{{ foyer.adressePostale.numeroRue }} {{ foyer.adressePostale.rue }}<br/>                 {{ foyer.adressePostale.cp }} {{ foyer.adressePostale.ville }}
+																	{% if foyer.adressePostale.pays != app.user.entiteActive.adresse.pays and foyer.adressePostale.pays !='' %}
+																		 ({{ foyer.adressePostale.pays }})
+																	{% endif %}
+																	</strong></span>
+																{% else %} <span class="textenormal">...........................................................................................</span>
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+												{% endif %}		
+											{% endif %}
+										{% endfor %}
+								{% endif %}
+								<br/>
+				
+								<p><span class="textenormal">Parrain      
+								{% set parrain = 0 %}
+									{% for beneficiaire in sacrement.dossierBeneficiaires %}
+										{% if personne.id == beneficiaire.personne.id %}
+										{% set personne1 = beneficiaire %}
+											{% if personne1.dossierPersonnel.parrain %}
+												<strong>{{ personne1.dossierPersonnel.parrain }}</strong>
+												{% set parrain = 1 %}
+											{% endif %}
+										{% endif %}	
+									{% endfor %}
+								{% if parrain == 0 %}	
+									..........................................................................................
+								{% endif %}
+								</span><br/>
+								<span class="textenormal">
+								{% for beneficiaire in sacrement.dossierBeneficiaires %}
+									{% if personne.id == beneficiaire.personne.id %}
+									{% set personne1 = beneficiaire %}
+										{% if personne1.dossierPersonnel.representantParrain != '' %}<i>représenté par {{ personne1.dossierPersonnel.representantParrain }}</i>
+										{% else %}<i>(représenté par)</i> ..................................................................................
+										{% endif %}</span></p>
+									{% endif %}
+								{% endfor %}
+				
+								<p><span class="textenormal">Marraine   
+								{% set marraine = 0 %}
+									{% for beneficiaire in sacrement.dossierBeneficiaires %}
+										{% if personne.id == beneficiaire.personne.id %}
+										{% set personne1 = beneficiaire %}
+											{% if personne1.dossierPersonnel.marraine %}
+												<strong>{{ personne1.dossierPersonnel.marraine }}</strong>
+												{% set marraine = 1 %}
+											{% endif %}
+										{% endif %}
+									{% endfor %}
+
+								{% if marraine == 0 %}	
+									..........................................................................................
+								{% endif %}
+								</span><br/>
+								<span class="textenormal">
+								{% for beneficiaire in sacrement.dossierBeneficiaires %}
+									{% if personne.id == beneficiaire.personne.id %}
+									{% set personne1 = beneficiaire %}
+										{% if personne1.dossierPersonnel.representantMarraine != '' %}<i>représentée par {{ personne1.dossierPersonnel.representantMarraine }}</i>
+										{% else %}<i>(représentée par)</i> ..................................................................................
+										{% endif %}</span></p>
+									{% endif %}
+								{% endfor %}
+				
+								<p><span class="textenormal">Témoin     
+								{% set temoin = 0 %}
+									{% for beneficiaire in sacrement.dossierBeneficiaires %}
+										{% if personne.id == beneficiaire.personne.id %}
+										{% set personne1 = beneficiaire %}
+											{% if personne1.dossierPersonnel.temoin %}
+												<strong>{{ personne1.dossierPersonnel.temoin }}</strong>
+												{% set temoin = 1 %}
+											{% endif %}
+										{% endif %}
+									{% endfor %}
+
+								{% if temoin == 0 %}	
+									..........................................................................................
+								{% endif %}
+								</span></p>
+				
+								<p><span class="notes-10px" align="center"><strong>__________________________________Signatures__________________________________</strong></span></p>
+				
+								<table width="100%" cellpadding="3px" border="0">
+									<tr>
+										<td width="50%" height="67px" valign="top"><span class="textenormal">Le baptisé</span></td>
+										<td width="50%" height="67px"valign="top"><span class="textenormal">Le ministre</span></td>
+									</tr>
+									<tr>
+										<td width="50%" height="67px"valign="top"><span class="textenormal">Le père</span></td>
+										<td width="50%" height="67px"valign="top"><span class="textenormal">La mère</span></td>
+									</tr>
+									<tr>
+										<td width="50%" height="67px"valign="top">
+											{% if parrain == 1 %}
+												<span class="textenormal">Le parrain</span>
+											{% endif %}
+										</td>
+										<td width="50%" height="67px"valign="top">
+											{% if marraine == 1 %}
+												<span class="textenormal">La marraine</span>
+											{% endif %}
+										</td>
+									</tr>
+									<tr>
+										<td width="50%" height="67px"valign="top">
+											{% if temoin == 1 %}
+												<span class="textenormal">Le témoin</span>
+											{% endif %}
+										</td>
+										<td width="50%" height="67px"valign="top"> </td>
+									</tr>
+                                  
+								</table>
+						</td>
+					</tr>
+				</table>
+			{% endif %}
+		{% endfor %}
+	{% if not loop.last %}<div class="page_break"></div>{% endif %}
+	{% endfor %}		
+	</main>
+	</body>
+</html>
