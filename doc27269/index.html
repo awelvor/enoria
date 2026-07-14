@@ -1,0 +1,199 @@
+ <style>
+      * {
+   font-family: arial;
+   font-size: 14px;
+
+      }
+  </style>
+
+
+
+  <!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>doc27269</title>
+   
+  </head>
+  <body>
+
+<table style="width: 100%;">
+<tr>
+<td style="width: 20%;"><img style="width:100px;" src="{{ app.user.entiteActive.logo|imagine_filter('logo')  }}"></td>
+<td style="width: 80%;">
+  <p style="text-align: center;">Renseignements en vue d'un Baptême</p> 
+  <p style="text-align: center;"">1 rue Saint-Yves 22300 Lannion - Tél: 0296467595</p> 
+  <p style="text-align: center;"><a href="https://lannion-pleumeur.catholique.fr/">https://lannion-pleumeur.catholique.fr/<a></p> 
+</td>
+</tr>
+</table>
+<p>Le demande de Baptême doit être retournée rapidement au secrétariat de la paroisse accompagnée d'une copie de l'acte de naissance de l'enfant et de votre offrande.</p>
+  
+  
+{% for personne     in personnes                      %}
+{% for sacrement    in personne.sacrements            %}
+
+{% for foyer        in personne.membreFoyer           %}
+
+
+ 
+  <table style="width: 100%">
+<tr> 
+<td style="width: 30%;text-align: center; font-size: 10px;">Demande prise par</td>
+<td style="width: 70%; text-align:right;">
+Lieu de la célébration : {{ sacrement.lieuReservation.salle.nom }} - {{ sacrement.lieuReservation.salle.lieu }}<br>
+         Date et heure : {{ sacrement.datePrevue|format_datetime('long','none',locale='fr') }}
+</td>
+</tr>
+    
+  </table>
+
+				  	   	
+
+   
+
+
+<h2>Identité de l'enfant</h2>
+<div style="display:flex; align-items: center;">
+<label style="width:30%; text-align: right;">Nom de l'enfant ( en majuscules ) : </label>{{ personne.nom }} 
+</div>
+
+<div style="display:flex; align-items: center;">
+<label style="width:30%; text-align: right;">Prénom : </label>{{ personne.prenom}}
+</div>
+<div style="display:flex;">
+<label style="width: 5%;text-align:right;">Né le : </label>{{ personne.dateNaissance|format_date }}
+</div>
+<div style="display:flex;">
+<label style="width: 20%; ">Fils - Fille de : </label>
+{{ foyer.pere.prenom }} {% if foyer.pere.particuleNom %}{{ foyer.pere.particuleNom }} {% endif %}{{ foyer.pere.nom }}
+</div>
+<div style="display:flex;">
+<label style="width: 20%;text-align:left;">Et de : </label>
+{{ foyer.mere.prenom }} {% if foyer.pere.particuleNom %}{{ foyer.mere.particuleNom }} {% endif %}{{ foyer.mere.nom }}
+</div>
+
+  <h2>Domiciliés actuellement à (adresse complète)</h2>
+
+{% for parent       in personne.parente2              %}
+{% set par = parent.personne1 %}
+<table width="100%">
+<tr> 
+<td colspan="3"> 
+  {% if (par.sexe == "F") and (par.nomjeunefille != '') %} {{ par.prenom }} {{ par.nomjeunefille }} épouse {{ par.particuleNom }} {{ par.nom }} {% endif %} 
+  {% if (par.sexe == "F") and (par.nomjeunefille == '') %} {{ par.prenom }} {{ par.particuleNom }} {{ par.nom }}{% endif %} 
+  {% if (par.sexe == "M") %} {{ par.prenom }} {{ par.particuleNom }} {{ par.nom }} {% endif %} 
+</td> 
+</tr> 
+<tr>
+<td>
+{% for foyer in par.membreFoyer %} 
+<strong>{{ foyer.adressePostale.numeroRue }} {{ foyer.adressePostale.rue }} {{ foyer.adressePostale.cp }} {{ foyer.adressePostale.ville }} </strong> 
+{% endfor %} 
+</td>
+</tr>
+  </table>
+    <table>
+				  	   <tr> 
+				  	   	<td width="3%"></td> <td width="20%">Téléphone :</td> 
+                         <td width="20%"> {{ par.getTelMobilePerso(app.user.entiteActive.country) }} </td>
+                         <td width="5%">Mel</td> <td width="53%"><strong>{{ par.mailPerso }}</strong></td> </tr>
+</table> 
+{%  endfor %}
+    
+  <h2>Témoignage du Prêtre du Domicile des Parents</h2>
+  <p>Si l'enfant doit être baptisé hors de la paroisse ou habitent les parents,
+ le formulaire doit être remis avec ce dossier.<br>
+  <label style="width: 20%;">  Fomumaire B15 remis : </label><input type="checkbox"></p>
+
+
+{% for beneficiaire in sacrement.dossierBeneficiaires %}
+{% if personne.id == beneficiaire.personne.id %} 
+<h2>Le parrain</h2>
+{{ beneficiaire.dossierPersonnel.parrain}}<br>
+{{ beneficiaire.dossierPersonnel.adresseParrain}}
+<h2>La marraine</h2>
+{{ beneficiaire.dossierPersonnel.marraine}}<br>
+{{ beneficiaire.dossierPersonnel.adresseMarraine}}
+{% endif %}
+{% endfor %}
+
+<h2>Le parrain et la marraine.</h2>
+
+<p style="font-size: 13px;">Le rôle des parrains et marraines et de favoriser l'éducation chrétienne des enfants et d'aider leur intégration dans la communauté.
+L'Eglise demande donc que les parrains et marraines âgés au moins de 16 ans soient baptisés et si possible confirmés.<br>
+Les personnes baptisées dans une autre confession chrétienne ou non baptisées peuvent être témoins.</p>
+
+<h2 style="page-break-before: always;">Les autres enfants</h2>
+
+    <table width="100%" border="1" cellspacing="0" cellpadding="2"> 
+  <tbody>
+    <tr> 
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap" width="20%">Prénom</td>
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap" width="20%">Nom</td> 
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap" width="20%">Date de naissance</td>
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap" width="20%">Baptisé</td> 
+   
+    </tr> 
+
+  
+     {% for membre in foyer.membres %}
+    {% if membre.profilAffichage == "J" %} {% if membre.id != personne.id %} 
+    <tr> 
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap">{{ membre.prenom }}</td>
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap">{{ membre.particuleNom }} {{ membre.nom|upper }}</td> 
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap">{{ membre.dateNaissance|date('d/m/Y') }}</td>
+      <td style="border: 1px solid grey; padding:2px; white-space:nowrap">{% if membre.IsBapteme == "T" %}Oui{% else %}Non{% endif %}</td>
+   
+    </tr> 
+     {% endif %} {% endif %} 
+    {%  endfor %}
+    </tbody> 
+</table> 
+
+<h1 style="text-align: center;">NOUS DEMANDONS LE BAPTEME POUR NOTRE ENFANT</h1>
+<p style="font-size: 13px;">Le Baptême est un acte sérieux, nous le savons.<br>
+Il marque profondément l'enfant, car en lui donnant sa Vie, Dieu s'engage avec lui et Dieu est fidèle.<br>
+Nous faisons cette demande :<br>
+<div style="width: 100%;height: 100px;padding: 10px;border: 5px solid gray;margin: 0;">
+Parce que ...
+</div>
+<p style="fontsize: 13px;">Nous savons que nous aurons un rôle essentiel dans l'éducation de la foi de notre enfant.<br>
+Nous pensons qu'il aura un jour besoin de s'éveiller à la foi de l'Eglise 
+en participant à la catéchèse avec d'autres enfants.<br>
+Nous nous engageons à accompagner notre enfant dans l'éveil à la foi.</p>
+<p style="margin-left: 10%;">A : ___________________ Le :  ____________________<br>
+<span style="width:10%; margin-left:1%; font-size: 10px;">signature du père :</span>  
+<span style="width:10%; margin-left:1%; font-size: 10px;">signature de la mère :</span></p>
+
+
+<p style="font-size: 13px;">Si un seul des deux parents croit pouvoir prendre cet engagement, l'autre parent signe ce qui suit:<br>
+"J'ai pris conscience de l'engagement de mon conjoint. Je suis d'accord pour le respecter entièrement."</p>
+<p style="margin-left: 10%;">A : ___________________ Le :  ____________________<br>
+<span style="width:10%; margin-left:1%; font-size: 10px;">signature :</span>  </p>
+
+
+
+
+
+<h2>Autorisation et consentement pour l'utilisation de données à caractère personnel</h2>
+
+<p style="font-size: 10px;">A  partir du 12 mai 2018, conformémément au Règlement Général pour la Protection des Données,
+vous bénéficiez d'un droit d'accès et de rectification aux informations vous concernant.<br>
+
+Aussi, à l'occasion du baptême de notre enfant, nous autorisons le diocèse de Saint-Brieuc 
+à utiliser nos coordonnées dans le cadre de correspondances liées aux activités paroissiales, au service du Denier de l'Eglise, aux pèlerinages, etc ...<br>
+Ces donnés seront exclusivement exploitées par le diocèse de Saint-Brieuc dans le cadre de ses activités, aucune information ne sera transmise à un tiers.</p>
+
+<p style="margin-left: 10%; page-break-after: always;">A : ___________________ Le :  ____________________<br>
+<span style="width:10%; margin-left:1%; font-size: 10px;">signature du père :</span>  
+<span style="width:10%; margin-left:1%; font-size: 10px;">signature de la mère :</span></p>
+   
+
+{% endfor %}
+{% endfor %}
+{% endfor %}
+
+</body>
+</html>
