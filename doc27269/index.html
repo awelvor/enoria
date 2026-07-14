@@ -2,8 +2,9 @@
       * {
    font-family: arial;
    font-size: 14px;
+}
 
-      }
+
   </style>
 
 
@@ -18,6 +19,16 @@
   </head>
   <body>
 
+{% for personne     in personnes                      %}
+{%  if not loop.first %}<div style="page-break-after: always;"></div>{%  endif %}
+{% for sacrement    in personne.sacrements            %}
+
+{% for foyer        in personne.membreFoyer           %}
+
+
+
+    
+
 <table style="width: 100%;">
 <tr>
 <td style="width: 20%;"><img style="width:100px;" src="{{ app.user.entiteActive.logo|imagine_filter('logo')  }}"></td>
@@ -31,10 +42,6 @@
 <p>Le demande de Baptême doit être retournée rapidement au secrétariat de la paroisse accompagnée d'une copie de l'acte de naissance de l'enfant et de votre offrande.</p>
   
   
-{% for personne     in personnes                      %}
-{% for sacrement    in personne.sacrements            %}
-
-{% for foyer        in personne.membreFoyer           %}
 
 
  
@@ -105,7 +112,7 @@ Lieu de la célébration : {{ sacrement.lieuReservation.salle.nom }} - {{ sacre
   <h2>Témoignage du Prêtre du Domicile des Parents</h2>
   <p>Si l'enfant doit être baptisé hors de la paroisse ou habitent les parents,
  le formulaire doit être remis avec ce dossier.<br>
-  <label style="width: 20%;">  Fomumaire B15 remis : </label><input type="checkbox"></p>
+  <label style="width: 20%;">  Formulaire B15 remis : </label><input type="checkbox"></p>
 
 
 {% for beneficiaire in sacrement.dossierBeneficiaires %}
@@ -186,13 +193,20 @@ Aussi, à l'occasion du baptême de notre enfant, nous autorisons le diocèse de
 à utiliser nos coordonnées dans le cadre de correspondances liées aux activités paroissiales, au service du Denier de l'Eglise, aux pèlerinages, etc ...<br>
 Ces donnés seront exclusivement exploitées par le diocèse de Saint-Brieuc dans le cadre de ses activités, aucune information ne sera transmise à un tiers.</p>
 
-<p style="margin-left: 10%; page-break-after: always;">A : ___________________ Le :  ____________________<br>
+<p style="margin-left: 10%;">A : ___________________ Le :  ____________________<br>
 <span style="width:10%; margin-left:1%; font-size: 10px;">signature du père :</span>  
 <span style="width:10%; margin-left:1%; font-size: 10px;">signature de la mère :</span></p>
    
 
+
+    {% if not loop.last %}
+                <div style="page-break-before: always;"></div>
+            {% endif %}
 {% endfor %}
+
 {% endfor %}
+
+
 {% endfor %}
 
 </body>
