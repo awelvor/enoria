@@ -42,6 +42,7 @@
        
          
 {% set chapelles=[
+
 {id: 14741, name:"Trébeurden Chapelle de Penvern"},
 {id: 14751, name:"Trébeurden Ehpad du Gavel"},
 {id: 14744, name:"Chapelle de Saint-Uzec"},
@@ -67,6 +68,7 @@
 {id: 20612, name:"Tréguier Cathédrale Saint-Tugdual"},
 {id: 11998, name:"Lannion Saint-Ivy - Loguivy-lès-Lannion"},
 {id: 16026, name:"Lannion Chapelle Saint-Thurien -Servel"},
+{id: 17140, name:"Servel Chapelle Saint-Nicodème"},
 {id: 11995, name:"Lannion Sainte Marguerite -Buhulien"},
 {id: 11998, name:"Lannion Saint-Ivy - Loguivy-lès-Lannion"},
 {id: 16794, name:"Lannion Chapelle Ecole Jeanne d'Arc"},
@@ -76,6 +78,7 @@
 
          
 {% for messe in messes %} 
+{#  messe.reservationEglise.salle.id:  messe.reservationEglise.salle.id  <br> #}
 {% if messe.reservationEglise.salle.id not in lieux %} {% set lieux=lieux|merge([messe.reservationEglise.salle.id]) %} {% endif %}
 {% if messe.dateHeure|date('Y/m/d') not in lesdates %} {% set lesdates=lesdates|merge([messe.dateHeure|date('Y/m/d')]) %} {% endif %}
 {% endfor %}
