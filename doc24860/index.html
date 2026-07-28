@@ -45,7 +45,9 @@
 
 {id: 14741, name:"Trébeurden Chapelle de Penvern"},
 {id: 14751, name:"Trébeurden Ehpad du Gavel"},
+{id: 21287, name:"Port de Trébeurden"},
 {id: 14744, name:"Chapelle de Saint-Uzec"},
+{id: 11996, name:"Notre Dame de Caouënnec"},
 {id: 11994, name:"Brélévenez"},
 {id: 12001, name:"Ploubezre"},
 {id: 12003, name:"Rospez Saint-Pierre et Saint-Paul"},
@@ -63,7 +65,9 @@
 {id: 17751, name:"Ehpad du Gavel"},
 {id: 16158, name:"Résidence Hernot"},
 {id: 12002, name:"Ploulec'h Saint-Pierre et Saint-Paul"},
+{id: 16029, name:"Chapelle Notre Dame du Yaudet"},
 {id: 11997, name:"Lanmérin Saint-Mérin"},
+{id: 16028, name:"Lanmérin Chapelle Notre Dame de la Salle"},
 {id: 11999, name:"Pleumeur-Bodou Saint-Pierre, Bourg"},
 {id: 20612, name:"Tréguier Cathédrale Saint-Tugdual"},
 {id: 11998, name:"Lannion Saint-Ivy - Loguivy-lès-Lannion"},
@@ -73,12 +77,13 @@
 {id: 11998, name:"Lannion Saint-Ivy - Loguivy-lès-Lannion"},
 {id: 16794, name:"Lannion Chapelle Ecole Jeanne d'Arc"},
 {id: 12000, name:"Pleumeur-Bodou Saint-Marc , Ile Grande"},
-{id: 14745, name:"Pleumeur-Bodou Chapelle de Saint-Samson"}
+{id: 14745, name:"Pleumeur-Bodou Chapelle de Saint-Samson"},
+{id: 22823, name:"Port Saint-Sauveur-Ile Grande"}
 ] %}
 
          
 {% for messe in messes %} 
-{#  messe.reservationEglise.salle.id:  messe.reservationEglise.salle.id  <br> #}
+{#  messe.reservationEglise.salle.id:   messe.reservationEglise.salle.id  <br>#}
 {% if messe.reservationEglise.salle.id not in lieux %} {% set lieux=lieux|merge([messe.reservationEglise.salle.id]) %} {% endif %}
 {% if messe.dateHeure|date('Y/m/d') not in lesdates %} {% set lesdates=lesdates|merge([messe.dateHeure|date('Y/m/d')]) %} {% endif %}
 {% endfor %}
