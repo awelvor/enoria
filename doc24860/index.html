@@ -78,12 +78,13 @@
 {id: 16794, name:"Lannion Chapelle Ecole Jeanne d'Arc"},
 {id: 12000, name:"Pleumeur-Bodou Saint-Marc , Ile Grande"},
 {id: 14745, name:"Pleumeur-Bodou Chapelle de Saint-Samson"},
-{id: 22823, name:"Port Saint-Sauveur-Ile Grande"}
+{id: 22823, name:"Port Saint-Sauveur-Ile Grande"},
+{id: 12008, name:"Trezeny - Saint-Zény"}
 ] %}
 
          
 {% for messe in messes %} 
-{#  messe.reservationEglise.salle.id:   messe.reservationEglise.salle.id  <br>#}
+{#   messe.reservationEglise.salle.id:   messe.reservationEglise.salle.id <br> #}
 {% if messe.reservationEglise.salle.id not in lieux %} {% set lieux=lieux|merge([messe.reservationEglise.salle.id]) %} {% endif %}
 {% if messe.dateHeure|date('Y/m/d') not in lesdates %} {% set lesdates=lesdates|merge([messe.dateHeure|date('Y/m/d')]) %} {% endif %}
 {% endfor %}
