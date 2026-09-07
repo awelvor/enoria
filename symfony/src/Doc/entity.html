@@ -1,0 +1,17 @@
+
+
+
+{% for personne     in personnes                      %}
+personne.nom
+personne.prenom
+personne.dateNaissance
+
+
+{% for sacrement    in personne.sacrements            %}
+sacrement.lieuReservation.salle.nom
+sacrement.lieuReservation.salle.lieu
+
+
+{% for foyer        in personne.membreFoyer           %}
+foyer.pere.particuleNom
+foyer.mere.particuleNom
