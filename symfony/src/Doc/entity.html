@@ -14,4 +14,33 @@ sacrement.lieuReservation.salle.lieu
 
 {% for foyer        in personne.membreFoyer           %}
 foyer.pere.particuleNom
+foyer.pere.nom
 foyer.mere.particuleNom
+foyer.mere.nom 
+
+{% for membre in foyer.membres %}
+membre.prenom
+membre.particuleNom
+membre.nom
+membre.dateNaissance
+membre.IsBapteme
+
+{% for parent       in personne.parente             %}
+{% set par = parent.personne1 %}
+par.sexe
+par.prenom
+par.particuleNom
+par.nom
+
+{% for foyer in par.membreFoyer %} 
+foyer.adressePostale.numeroRue
+foyer.adressePostale.rue
+foyer.adressePostale.cp
+foyer.adressePostale.ville
+
+{% for beneficiaire in sacrement.dossierBeneficiaires %}
+beneficiaire.personne.id
+beneficiaire.dossierPersonnel.parrain
+beneficiaire.dossierPersonnel.adresseParrain
+beneficiaire.dossierPersonnel.marraine
+beneficiaire.dossierPersonnel.adresseMarraine
