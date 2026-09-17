@@ -1,0 +1,19 @@
+{% for personne in personnes %}
+{% for sacrement in personne.sacrements %}
+{% for beneficiaire in sacrement.dossierBeneficiaires %}
+************************<br>  
+sacrement.type: {{ sacrement.type}}<br>
+sacrement.status: {{ sacrement.status}}<br>
+sacrement.lieuReservation: {{ sacrement.lieuReservation}}<br>
+personne.id: {{ personne.id }}<br>
+beneficiaire.personne.id: {{ beneficiaire.personne.id }}<br>
+beneficiaire.dossierPersonnel.numActe: {{  beneficiaire.dossierPersonnel.numActe }}<br>
+*****************************************<br>
+
+{%  endfor %} 
+{%  endfor %}
+{%  endfor %}
+
+{%  for permanence in permanences %}
+{{ permanence.id }}<br>
+{%  endfor %}
