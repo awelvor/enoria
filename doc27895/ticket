@@ -16,3 +16,11 @@ Test Bapteme:Status
 sacrement.type: bapteme
 sacrement.status: draft
 personne.id: 1950801
+
+En utiliant la procedure normale: selection > documents > modele de document > visualisation PDF
+j'obtiens un résultat valide:
+
+Test Bapteme:Status
+sacrement.type: bapteme
+sacrement.status: accepted
+personne.id: 1950801
