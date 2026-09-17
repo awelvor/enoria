@@ -25,8 +25,13 @@ sacrement.type: bapteme
 sacrement.status: accepted
 personne.id: 1950801
 
-rtout à status : demande brouillon
+retour à status : demande brouillon
 en utilisant la procedure normale : selection > documents > modele de document > visualisation PDF
 j'obtiens ce message d'erreur:
   ERREUR
 Vous devez sélectionner au moins un sacrement
+
+
+
+--------------------------------------------------------------- 
+En conclusion: pourquoi ce message d'erreur lorsque STATUS = DEMANDE BROUILLON
