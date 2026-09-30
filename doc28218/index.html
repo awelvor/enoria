@@ -1,0 +1,276 @@
+<html>
+<body>
+ <p>Célébrations<</p>
+{# ********************************PHASE 1 - RECUEILLIR, TRAITER ET TRIER LES DONNEES********************** #}   
+  
+{# Création d’une table auxiliaire de messes à retenir et à trier, hors messes quotidiennes #} 
+       {#-- initialiser table--#}
+      {% set messesAAfficher = [] %}    
+      {% set comptLigneMesses=0 %}
+ 
+ {# Boucle sur les messes retenues, pour récupérer les infos utiles #}       
+  
+  {% for messe1 in messes %}
+     {% if (messe1.type != "quotidienne") %}
+        
+  {# -- initialisation des variables lignes--#}
+
+       {% set valLiturgique =''%}
+       {% set valCouleur="jaune" %} {# --couleur de fond par défaut --#}
+       {% set valCocelebrants =''%}
+       {% set valCocelebrants =''%}  
+       {% set valSolenniteFete = '' %} 
+       {% set solenniteFete = false %} 
+
+  {#-- récup variables couleur, liturgique et solennité/fête --#}
+       {% set valeur2= null %} 
+       {% set valeur3= null %}
+       {% set valeur4= null %}
+       {% set valeur5= null %}
+       {% set compt=0 %}
+  
+       {% for valeur in messe1.informationsLiturgiques %} {#  -- boucle for sur les valeurs contenues dans informationsLiturgiques, origine AELF #}  
+         
+          {% if compt == 1 %} {% set valLiturgique = valeur %} {% endif %}
+          {% if compt == 2 %} {% set valeur2 = valeur %} {% endif %}
+          {% if compt == 3 %} {% set valeur3 = valeur %} {% endif %}
+          {% if compt == 4 %} {% set valeur4 = valeur %} {% endif %}
+          {% if compt == 5 %} {% set valeur5 = valeur %} {% endif %}
+          {% set compt = compt+1 %} 
+
+      {% endfor %} 
+
+          {#-- valeur couleur : valeur 5 par défaut, valeur 4 si anomalie sur valeur 5 --#}  
+          {% if valeur5 in ['vert','blanc', 'violet', 'rouge', 'rose','noir'] %} {% set valCouleur = valeur5 %} 
+          {% elseif valeur4 in ['vert','blanc', 'violet', 'rouge', 'rose','noir'] %} {% set valCouleur = valeur4 %}
+          {% endif %} 
+  
+          {#-- valeur solennité/fête : valeur 3 par défaut, valeur 2 si anomalie sur valeur 3  --#}
+          {% if valeur3 in ['Solennité','Solennité du Seigneur','Fête'] %} {% set valSolenniteFete = valeur3 %} {% set solenniteFete = true %} 
+          {%  elseif valeur2 in ['Solennité','Solennité du Seigneur','Fête'] %} {% set valSolenniteFete = valeur2 %}{% set solenniteFete = true %} 
+          {% endif %}    
+
+          {#-- concaténation valSolenniteFete et valLiturgique si solennité ou fête --#}
+          {% if solenniteFete  %} {% set valLiturgique = valSolenniteFete ~ " - "~ valLiturgique %} {% endif %} 
+         
+          {#-- traitement du cas Veillée de Noël - n'apparait pas dans l'info liturgique, AELF donne l'info de la messe du matin --#}
+          {% if ((messe1.type == "noelveille") or (valLiturgique =="24 décembre")) %}{% set valLiturgique = "Veillée de Noël" %} {% endif %}
+  
+       {#--  Concaténation célébrants --#} 
+         
+         {% for celebrant1 in messe1.celebrants %}
+            {% set celebrantPrenom= " "  %}
+            {% set celebrantNom= " " %}
+            {% set celebrantPrenom= celebrant1.personne.prenom|first|upper %}  
+            {% set celebrantNom= celebrant1.personne.nom|first|upper %}
+            {% set valCocelebrants =  "#{valCocelebrants}#{celebrantPrenom}#{celebrantNom} "  %} {# --modif 26.09.26 --#}
+         {% endfor %}
+  
+      {# recup. des autres données pour une messe et création d’un sous-tableau (une ligne de données) par messe #} 
+  
+        {% set valDateHeure = null %}
+        {% set valEglise = " " %}
+        {% set valInformations = " "  %}
+        {% set valNotesPubliques = " "  %}
+        {% set valLieu = " "  %}
+        {% set valDateChaine = " "  %}
+   
+        {% set valDateHeure = messe1.dateHeure %}
+        {% set valEglise = messe1.reservationEglise.salle.NomCourt %}
+        {% set valInformations = messe1.informations  %}
+        {% set valNotesPubliques = messe1.notesPubliques  %}
+        {% set valLieu = messe1.reservationEglise.salle.lieu   %}
+        {% set valDateChaine = valDateHeure|date('YmdHi')  %}  
+
+
+    {# Création de cellules et lignes pour ajout à la table MessesAAfficher #}
+        {% set nouvelleLigne = [] %}
+        {% set comptLigneMesses=comptLigneMesses +1 %}
+  
+       {% for i in 0..9 %}
+          {% if i==0 %}{% set nouvelleCellule = valLiturgique %}{% endif %}
+          {% if i==1 %}{% set nouvelleCellule = valCouleur %}{% endif %}
+          {% if i==2 %}{% set nouvelleCellule = valDateHeure %}{% endif %}
+          {% if i==3 %}{% set nouvelleCellule = valEglise%}{% endif %}
+          {% if i==4 %}{% set nouvelleCellule = valCocelebrants %}{% endif %}
+          {% if i==5 %}{% set nouvelleCellule = valInformations %}{% endif %}
+          {% if i==6 %}{% set nouvelleCellule = valNotesPubliques %}{% endif %}
+          {% if i==7 %}{% set nouvelleCellule = valLieu %} {% endif %}
+          {% if i==8 %}{% set nouvelleCellule = valDateChaine~valLieu %} {% endif %}
+          {% if i==9 %}{% set nouvelleCellule = comptLigneMesses %} {% endif %}
+    
+         {% set nouvelleLigne = nouvelleLigne|merge([nouvelleCellule]) %}
+      {% endfor%}    
+  
+  {# Ajout des infos du sous-tableau dans le tableau principal pour une messe #} 
+  
+    {% set messesAAfficher = messesAAfficher|merge([nouvelleLigne]) %}
+     
+    {% endif %}  {# -- fin sélection des messses autres que quotidiennes --#}
+    {% endfor %} {# -- fin boucle for de récupération des messes retenues --#}
+
+ 
+   {# Tri sur valeur concaténée DateChaine et Lieu avec recopie dans une table messesTriees #}
+ 
+    {% set messesTriees =[] %}
+    {% set messesTriees = messesAAfficher|sort((a,b)=> a[8] <=> b[8]) %}
+
+  
+
+
+
+  {# ********************************PHASE 2 - CONSTRUIRE LA TABLE HTML DE SORTIE********************** #}   
+
+      {#--à partir des données de la table messesTriees--#}
+  
+        {#-- ajuster le nb de colonnes (span) en fonction des options --#}
+        {% set nbcol=4 %}
+        {% if options.aveccelebrants %} 
+            {% set nbcol=5 %} 
+        {% endif %}
+      
+       {% set liturgiquePrec = ' ' %}
+       {% set couleurTexte = "" %}
+       {% if options.caltrim %}{% set taillePolice=24 %} {% else %} {% set taillePolice=11 %}{% endif %}
+
+   
+  {# rappel des options choisies sur la première ligne--#}
+   <table style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:{{taillePolice}};"> 
+   <tr style="color:red"> 
+     <td colspan= {{nbcol}} align="center" > 
+       {% if options.caltrim %}
+            {% if options.aveccelebrants or options.avecinformations %}{{"Edition de contrôle"}}}
+            {% else %}{{"Calendrier trimestriel"}} {% endif %}
+       {% else %}{{"Edition de contrôle"}}
+       {% endif %}
+     </td>
+  </tr>
+
+   <tr>
+   <td colspan= {{nbcol}} align="center" > 
+              {% if options.caltrim %}{{"... "}}{% endif %}
+              {% if options.aveccelebrants %}{{" célébrants, "}}{% endif %}
+              {% if options.avecinformations %}{{"notes céléb, "}}{% endif %}
+              {% if options.avecinfopubliques %}{{"notes publiques, "}}{% endif %}
+   </td>
+  </tr>
+  
+{% for messe3 in messesTriees %}
+
+  {#--  créer la cellule informations liturgiques sur la largeur du tableau à chaque changement de libellé seulement --#}
+
+   {% set liturgique = messe3[0] %}
+   {% if liturgique != liturgiquePrec %}  
+    
+       {% set liturgiquePrec = liturgique %}
+   
+   {#-- mettre au point l'information liturgique--#}
+   
+      {#-- retirer les termes du psautier de liturgique--#}
+        {% if '(semaine I du Psautier)' in liturgique %}
+            {% set liturgique = liturgique|replace({'(semaine I du Psautier)': ''}) %}
+        {% elseif '(semaine II du Psautier)' in liturgique %}
+            {% set liturgique = liturgique|replace({'(semaine II du Psautier)': ''}) %}
+        {% elseif '(semaine III du Psautier)' in liturgique %}
+            {% set liturgique = liturgique|replace({'(semaine III du Psautier)': ''}) %}
+        {% elseif '(semaine IV du Psautier)' in liturgique %}
+            {% set liturgique = liturgique|replace({'(semaine IV du Psautier)': ''}) %}
+        {% elseif '[Psautier semaine propre]' in liturgique %}
+            {% set liturgique = liturgique|replace({'[Psautier semaine propre]': ''}) %}   
+        {% endif %}   
+   
+     {#-- Cas particuliers de libellés trop longs --#} 
+          {% if 'DÉDICACE DES ÉGLISES'in liturgique %} 
+              {% set liturgique='Solennité - Dédicace des églises'%} 
+          {% endif %}
+          {% if 'Commémoration de tous les fidèles défunts'in liturgique %}  
+              {% set liturgique ='Commémoration de tous les fidèles défunts'  %}
+          {% endif %}
+   
+     {#-- remplacer les abréviations èmes par e et 1ère par 1re--#}
+        {% set liturgique = liturgique|replace({'ème': 'e'}) %}
+        {% set liturgique = liturgique|replace({'1ère': '1re'}) %}
+ 
+  {#-- gérer les couleurs de texte--#}
+       {% set couleur = messe3[1] %}
+       {% set couleurTexte='black' %}  
+       {% if (couleur=='noir') or (couleur=='violet') %} 
+         {% set couleurTexte='white' %}
+       {% endif %}
+
+     {#-- gérer les couleurs de fond--#}
+        {% set couleur = couleur|replace({'vert':"#92d050"}) %}  {#-- #3A9D23--#}
+        {% set couleur = couleur|replace({'blanc':"#f0f0f0"}) %}  {#-- FFFFFF--#}
+        {% set couleur = couleur|replace({'violet':"#b46eb4"}) %}  {#-- #723E64"--#}
+        {% set couleur = couleur|replace({'rouge':"#FF0000"}) %}  {#-- #FF0000--#}
+        {% set couleur = couleur|replace({'rose':"#FD6C9E"}) %}  {#-- #FD6C9E--#} 
+        {% set couleur = couleur|replace({'noir':"#000000"}) %}  {#-- #000000 --#}
+
+  {# Remplir la cellule « bandeau info liturgique » #}
+           <td colspan={{nbcol}} style="text-align:center;font-weight:bold;color:{{couleurTexte}};background-color:{{couleur}};">
+           {{liturgique}}
+           </td>
+        {% endif %}
+
+     {#-- renseigner les lignes célébrations--#}
+
+          {#-- lire les données célébrations pour la messe concernée--#}
+          {% set dateHeure = messe3[2] %}
+          {% set eglise = messe3[3] %}
+          {% set coCelebrants = messe3[4] %}
+          {% set informations = messe3[5] %}
+          {% set notesPubliques = messe3[6] %}
+   <tr> 
+
+ {#--  affiche seulement les cellules des lignes qui correspondent au choix de la liste déroulante paroisse --#}
+{% if options.caltrim or options.paroisse == "les deux" or options.paroisse == messe3[7] %}
+    
+        <td>  {#-- jour--#}
+            {{dateHeure|format_datetime('none','none',pattern='EEEE')}} 
+        </td>
+        <td align="center">  {#-- date--#}
+            {{dateHeure|format_datetime('none','none',pattern='dd MMM') }}
+        </td>
+        <td align="center">  {#--  heure --#}
+            {{dateHeure|date('H:i')}}
+        </td> 
+        <td >  {#-- eglise--#}
+            {{eglise}}  
+        </td>
+         {#-- co-celebrants--#}
+             {% if coCelebrants %}
+               {% if options.aveccelebrants %}
+                <td>    
+                {{ coCelebrants }}
+               </td>
+                {% endif %}
+             {% endif%}
+
+  </tr>
+    {% if options.avecinformations %}
+        {% if informations %}
+            <tr>
+                <td colspan={{nbcol}} style="text-align:center;"> 
+                    <i> ⤷ {{informations}}</i>
+                </td>
+            </tr> 
+        {% endif %}
+    {%  endif %}
+
+       {#--  créer la cellule informations publiques messe sur la largeur du tableau--#}
+    {% if options.avecinfopubliques or options.caltrim %}
+        {% if notesPubliques %}
+            <tr>
+                <td colspan={{nbcol}} style="text-align:center;"> 
+                    <i> ⤷ {{notesPubliques}}</i>
+                </td>
+            </tr> 
+        {% endif %}
+    {% endif %}
+ {#-- fin de la ligne de cellules affichée ou non--#}
+    {% endif  %}
+
+{% endfor %}  
+</table>  
+    </body>
+</html>
