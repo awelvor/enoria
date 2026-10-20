@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PersonneRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
@@ -13,18 +14,34 @@ class Personne
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $prenom = null;
-
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'personnes')]
-    private ?Foyer $foyer = null;
+    #[ORM\Column(length: 20)]
+    private ?string $prenom = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateNaissance = null;
+
+    // Utilisation d'une minuscule et initialisation à un tableau vide (recommandé)
+   #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $sacrements = [];
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $nom = $nom; // correction pour éviter l'effet de bord, voir syntaxe standard ci-dessous
+
+        return $this;
     }
 
     public function getPrenom(): ?string
@@ -39,26 +56,26 @@ class Personne
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getDateNaissance(): ?\DateTimeInterface
     {
-        return $this->nom;
+        return $this->dateNaissance;
     }
 
-    public function setNom(string $nom): static
+    public function setDateNaissance(?\DateTimeInterface $dateNaissance): static
     {
-        $this->nom = $nom;
+        $this->dateNaissance = $dateNaissance;
 
         return $this;
     }
 
-    public function getFoyer(): ?Foyer
+    public function getSacrements(): ?array
     {
-        return $this->foyer;
+        return $this->sacrements;
     }
 
-    public function setFoyer(?Foyer $foyer): static
+    public function setSacrements(?array $sacrements): static
     {
-        $this->foyer = $foyer;
+        $this->sacrements = $sacrements;
 
         return $this;
     }
