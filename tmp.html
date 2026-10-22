@@ -1,0 +1,9 @@
+
+
+{% for foyer in inscription.personne.membreFoyer %}
+{{ foyer.adressePostale.rue}}
+{{ foyer.adressePostale.complementAdresse}}
+{{ foyer.adressePostale.NumeroRue}}
+{{ foyer.adressePostale.cp}}
+{{ foyer.adressePostale.ville}}
+{% endfor %}
